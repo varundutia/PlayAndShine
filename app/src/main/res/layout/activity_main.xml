@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="#fff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appBar"
+        android:padding="16dp"
+        >
+
+        <TextView
+            android:id="@+id/activityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/buttonSendRequestIcon"
+            android:layout_toRightOf="@+id/buttonBack"
+            android:text="Play and Shine"
+            android:textColor="#000"
+            android:textSize="25dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true">
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/buttonRequests"
+                android:onClick="buttonRequestsClicked"
+                android:background="@drawable/ic_request"/>
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/buttonSearch"
+                android:onClick="buttonSearchClicked"
+                android:background="@drawable/ic_search"/>
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/buttonProfile"
+                android:onClick="buttonProfileClicked"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_user"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appBar"
+        android:paddingTop="16dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chats"
+            android:textSize="24dp"
+            android:layout_marginLeft="16dp"
+            android:textColor="#000"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listChats"
+            android:tag="heyyy"
+            android:divider="@android:color/white"
+            android:dividerHeight="0dp"
+            />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/noChat"
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/empty_no_chats"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search professional to start connecting."
+            android:id="@+id/actionsButton"
+            android:textColor="#000"
+
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="To know how to use the app go to faq (?) in My Profile."
+
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

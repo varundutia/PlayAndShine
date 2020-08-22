@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "795605980557",
+    "firebase_url": "https://playandshine-93486.firebaseio.com",
+    "project_id": "playandshine-93486",
+    "storage_bucket": "playandshine-93486.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795605980557:android:c1c4d8d2ba84606009d9c4",
+        "android_client_info": {
+          "package_name": "com.one.apperz.playandshine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795605980557-g61jrmvura1abh9j5s48644el57bad1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.one.apperz.playandshine",
+            "certificate_hash": "47aced455a4d05a22d947b6c4884ab107c9ebb7d"
+          }
+        },
+        {
+          "client_id": "795605980557-boc79gtderp91om87kj9qinrt7c15k4v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS4vyCb0DLTqJG2kzmnwbh6KBsZreE87A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795605980557-boc79gtderp91om87kj9qinrt7c15k4v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

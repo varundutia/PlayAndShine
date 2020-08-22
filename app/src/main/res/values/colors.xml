@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1273EB</color>
+    <color name="colorPrimaryDark">#0B4996</color>
+    <color name="colorAccent">#02173C</color>
+
+    <color name="instaGrey">#c5c5c5</color>
+    <color name="pnsBlue">#1273EB</color>
+
+    <color name="appIntroColor1">#fab</color>
+
+</resources>

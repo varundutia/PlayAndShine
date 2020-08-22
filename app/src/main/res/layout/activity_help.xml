@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HelpActivity"
+    android:background="#fff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appBar"
+        android:padding="16dp"
+        android:background="#fff"
+        android:elevation="10dp">
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_back"
+            android:id="@+id/buttonBack"
+            android:layout_centerVertical="true"
+            android:onClick="buttonBackClicked"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activityTitle"
+            android:text="Help"
+            android:textColor="#000"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/buttonBack"
+            />
+
+    </RelativeLayout>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/appBar">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FAQs"
+            android:textSize="24dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#000"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Q1. Who are we?"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Play and Shine foundation is a non-profit initiative working towards promoting sports literacy and mentorship. Our aim is to ensure that every individual has the right to have an equal opportunity to play sports."
+            android:textColor="#000"
+            android:textSize="15dp"
+            android:layout_marginTop="4dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Q2. How this app will help you?"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Through this app we want to establish a strong value laden network of sports professionals and enthusiasts every member can have access to and take advantage of to chalk out a niche for himself/herself in the sports arena."
+            android:textColor="#000"
+            android:textSize="15dp"
+            android:layout_marginTop="4dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Q3. How to create a profile?"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="Signing up as a member is a simple 2 minute process. Through the create profile option you give us basic details such as name, age, sports, location details etc which will help us better connect you with people from the same domain or similar interests."
+            android:textColor="#000"
+            android:layout_marginVertical="4dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Q4. How to send/accept requests?"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="Once you have created your profile, if you are an athlete you can send request to the specific sports professionals you want to connect with or seek mentorship from by entering the requisite details in the input boxes provided. If you are a sports professional you can accept requests from several athletes but if you are an athlete you will be matched to ONLY 1  professional who will accept your request first."
+            android:textColor="#000"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Q5. How to generate fresh requests?"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="In case your previous request does not work out well or you do not hear back from the counter party you can generate a fresh request anytime by ending the previous request first and then create a fresh request to reach out to someone else."
+            android:textColor="#000"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/askUsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/askUs"
+            android:layout_gravity="center"
+            android:textSize="12dp"
+            android:layout_marginTop="24dp"
+            />
+
+    </LinearLayout>
+</ScrollView>
+</RelativeLayout>

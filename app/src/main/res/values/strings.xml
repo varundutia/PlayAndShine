@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Play And Shine</string>
+    <string name="message_edit_text_hint">Type your message here</string>
+    <string name="users_collection">users</string>
+    <string name="chat_collection">chats</string>
+    <string name="requests_collection">requests</string>
+    <string name="message_collection">messages</string>
+    <string name="link_website"><a href="https://playandshine.in/">Visit our Website</a> to Know more.</string>
+
+    <string name="social_facebook"><a href="https://www.facebook.com/playandshine" /></string>
+    <string name="social_instagram"><a href="https://www.instagram.com/playandshinefoundation" /></string>
+    <string name="social_youtube"><a href="https://www.youtube.com/channel/UCIjGW18wvXZ65bHgK2t-T2A"/></string>
+    <string name="askUs">IN CASE YOU HAVE ANY FURTHER DOUBTS YOU CAN REACH OUT TO US AT <a href="https://playandshine.in/">www.playandshine.in</a></string>
+
+</resources>

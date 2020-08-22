@@ -1,0 +1,20 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="fontFamily">@font/raleway
+        </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+
+    </style>
+
+    <style name="Theme.App.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/instaGrey</item>
+        <item name="colorControlActivated">@color/instaGrey</item>
+        <item name="colorControlHighlight">@color/instaGrey</item>
+    </style>
+
+</resources>
