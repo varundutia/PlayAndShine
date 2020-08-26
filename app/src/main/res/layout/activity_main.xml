@@ -29,12 +29,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_alignParentRight="true">
-            <TextView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/buttonRequests"
-                android:onClick="buttonRequestsClicked"
-                android:background="@drawable/ic_request"/>
+
             <TextView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -50,6 +45,17 @@
                 android:background="@drawable/ic_user"/>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/buttonRequests"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="86dp"
+            android:background="@drawable/ic_request"
+            android:onClick="buttonRequestsClicked" />
+
 
     </RelativeLayout>
 
@@ -60,6 +66,7 @@
         android:layout_below="@+id/appBar"
         android:paddingTop="16dp"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

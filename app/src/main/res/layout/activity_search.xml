@@ -7,32 +7,44 @@
     android:background="#fff">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/appBar"
-        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
         android:background="#fff"
-        android:elevation="5dp">
+        android:elevation="5dp"
+        android:padding="16dp">
+
         <TextView
+            android:id="@+id/buttonBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/ic_back"
-            android:id="@+id/buttonBack"
-            android:onClick="buttonBackClicked"
             android:layout_centerVertical="true"
-            />
+            android:background="@drawable/ic_back"
+            android:onClick="buttonBackClicked" />
+
         <TextView
+            android:id="@+id/activityTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activityTitle"
-            android:text="Search"
-            android:textColor="#000"
-            android:textSize="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_toLeftOf="@+id/buttonSendRequestIcon"
             android:layout_toRightOf="@+id/buttonBack"
-            />
+            android:text="Search"
+            android:textColor="#000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/buttonQ"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="onQClicked"
+            android:background="@drawable/ic_help"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </RelativeLayout>
 

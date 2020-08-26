@@ -1,9 +1,13 @@
 package com.one.apperz.playandshine;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +41,7 @@ import com.one.apperz.playandshine.model.ChatsItemModel;
 import com.one.apperz.playandshine.model.Message;
 import com.one.apperz.playandshine.model.Request;
 import com.one.apperz.playandshine.model.UserProfile;
+import com.one.apperz.playandshine.model.Walkthrough;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Request> requestsAccepted;
     ArrayList<ChatsItemModel> chats;
     CustomAdapter adapter;
-
+    private boolean searchF = true;
+    private boolean editF = true;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +71,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(v);
         context = this;
         Paper.init(context);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        searchF = pref.getBoolean("searchF", true);
+        editF = pref.getBoolean("profileEditF",true);
+        editor = pref.edit();
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        // Build prompt dialog
+//        builder.setTitle("Welcome to the USC Residential Experience App")
+//                .setMessage("Would you like to view a brief tutorial on how to use the app?")
+//                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // do something if user clicked YES
+////                        Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+////                        startActivity(intent);
+//                    }
+//                })
+//                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                    }
+//                })
+//                .show();
+
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -353,13 +387,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonSearchClicked(View view) {
-        Intent intent = new Intent(context, Search.class);
-        startActivity(intent);
+        if (searchF){
+            new Walkthrough(view,MainActivity.this,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
+            editor.putBoolean("searchF",false);
+            editor.apply();
+            searchF = false;
+            Intent intent = new Intent(context,ImageActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(context, Search.class);
+            startActivity(intent);
+        }
     }
 
     public void buttonProfileClicked(View view) {
-        Intent intent = new Intent(context, EditProfile.class);
-        startActivity(intent);
+        if (editF){
+            new Walkthrough(view,MainActivity.this,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
+            editor.putBoolean("ProfileEditF", false);
+            editor.apply();
+            editF = false;
+        } else {
+            new Walkthrough(view, MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
+            Intent intent = new Intent(context, EditProfile.class);
+            startActivity(intent);
+        }
     }
 
     class CustomAdapter extends BaseAdapter {

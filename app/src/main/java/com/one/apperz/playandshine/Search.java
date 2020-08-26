@@ -32,6 +32,7 @@ import com.one.apperz.playandshine.databinding.ActivitySearchBinding;
 import com.one.apperz.playandshine.helperLord.HelperLordFunctions;
 import com.one.apperz.playandshine.model.Request;
 import com.one.apperz.playandshine.model.UserProfile;
+import com.one.apperz.playandshine.model.Walkthrough;
 
 import java.util.ArrayList;
 
@@ -69,7 +70,16 @@ public class Search extends AppCompatActivity {
     }
 
     public void buttonBackClicked(View view) {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
         finish();
+
     }
 
 
@@ -268,6 +278,10 @@ public class Search extends AppCompatActivity {
 
             return item;
         }
+    }
+    public void onQClicked(View view){
+        Intent intent =new Intent(this,ImageActivity.class);
+        startActivity(intent);
     }
 
 
