@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ChatsItemModel> chats;
     CustomAdapter adapter;
     private boolean searchF = true;
-    private boolean editF = true;
+    private boolean profileEditF = true;
     SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         Paper.init(context);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        profileEditF = pref.getBoolean("profileEditF",true);
         searchF = pref.getBoolean("searchF", true);
-        editF = pref.getBoolean("profileEditF",true);
         editor = pref.edit();
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -390,10 +390,10 @@ public class MainActivity extends AppCompatActivity {
         if (searchF){
             new Walkthrough(view,MainActivity.this,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
             editor.putBoolean("searchF",false);
-            editor.apply();
+            editor.commit();
             searchF = false;
-            Intent intent = new Intent(context,ImageActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(context,ImageActivity.class);
+//            startActivity(intent);
         } else {
             Intent intent = new Intent(context, Search.class);
             startActivity(intent);
@@ -401,13 +401,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonProfileClicked(View view) {
-        if (editF){
-            new Walkthrough(view,MainActivity.this,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
-            editor.putBoolean("ProfileEditF", false);
-            editor.apply();
-            editF = false;
-        } else {
+        if (profileEditF){
             new Walkthrough(view, MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
+            editor.putBoolean("ProfileEditF", false);
+            editor.commit();
+            profileEditF = false;
+        } else {
             Intent intent = new Intent(context, EditProfile.class);
             startActivity(intent);
         }

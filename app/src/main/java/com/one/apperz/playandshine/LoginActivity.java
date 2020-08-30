@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.paperdb.Paper;
-
 public class LoginActivity extends AppCompatActivity {
 
     Context context;

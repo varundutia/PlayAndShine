@@ -206,7 +206,7 @@ public class RegisterActivity extends AppCompatActivity {
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(RegisterActivity.this, "Authentication failed. Try Again",
+                                Toast.makeText(RegisterActivity.this, "Email Already Exists",
                                         Toast.LENGTH_SHORT).show();
                                 binding.pleaseWait.setVisibility(View.GONE);
                             }
@@ -242,6 +242,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void buttonBackClicked(View view) {
-        onBackPressed();
+        finish();
     }
 }
