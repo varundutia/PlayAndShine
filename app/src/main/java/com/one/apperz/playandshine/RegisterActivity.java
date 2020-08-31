@@ -241,7 +241,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void buttonBackClicked(View view) {
-        finish();
-    }
+//    public void buttonBackClicked(View view) {
+//        startActivity(new Intent(this,LoginActivity.class));
+////        finish();
+//    }
 }

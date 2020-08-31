@@ -388,12 +388,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonSearchClicked(View view) {
         if (searchF){
-            new Walkthrough(view,MainActivity.this,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
+//            new Walkthrough(view,MainActivity.this,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
             editor.putBoolean("searchF",false);
             editor.commit();
             searchF = false;
-//            Intent intent = new Intent(context,ImageActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(context,ImageActivity.class);
+            startActivity(intent);
         } else {
             Intent intent = new Intent(context, Search.class);
             startActivity(intent);
@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
     public void buttonProfileClicked(View view) {
         if (profileEditF){
             new Walkthrough(view, MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
-            editor.putBoolean("ProfileEditF", false);
+            editor.putBoolean("profileEditF", false);
             editor.commit();
             profileEditF = false;
         } else {

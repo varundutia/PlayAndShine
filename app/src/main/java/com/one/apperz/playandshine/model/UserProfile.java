@@ -3,17 +3,17 @@ package com.one.apperz.playandshine.model;
 import java.io.Serializable;
 
 public class UserProfile implements Serializable {
-    private String uid;
-    private String name;
-    private String email;
-    private String sport;
-    private String type;
-    private String photoURL;
-    private String achievement;
+    private String uid="";
+    private String name="";
+    private String email="";
+    private String sport="";
+    private String type="";
+    private String photoURL="";
+    private String achievement="";
     private int age;
-    private String phone;
-    private String location;
-    private String experience;
+    private String phone="";
+    private String location="";
+    private String experience="";
 
     public UserProfile(String uid,String name, String email, String sport, String type, String photoURL, String achievement, int age, String phone, String location,String experience) {
         this.name = name;
@@ -33,7 +33,7 @@ public class UserProfile implements Serializable {
     }
 
     public String getExperience() {
-        return experience;
+        return this.experience;
     }
 
     public void setExperience(String experience) {
@@ -41,7 +41,7 @@ public class UserProfile implements Serializable {
     }
 
     public String getUid() {
-        return uid;
+        return this.uid;
     }
 
     public void setUid(String uid) {
@@ -49,7 +49,7 @@ public class UserProfile implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -57,7 +57,7 @@ public class UserProfile implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -73,7 +73,7 @@ public class UserProfile implements Serializable {
     }
 
     public String getSport() {
-        return sport;
+        return this.sport;
     }
 
     public void setSport(String sport) {
@@ -81,7 +81,7 @@ public class UserProfile implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(String type) {
