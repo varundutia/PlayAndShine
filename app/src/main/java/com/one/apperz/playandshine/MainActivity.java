@@ -72,9 +72,12 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         Paper.init(context);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        profileEditF = pref.getBoolean("profileEditF",true);
-        searchF = pref.getBoolean("searchF", true);
-        editor = pref.edit();
+        if(pref != null) {
+            profileEditF = pref.getBoolean("profileEditF", true);
+            searchF = pref.getBoolean("searchF", true);
+            editor = pref.edit();
+        }
+
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
@@ -97,10 +100,13 @@ public class MainActivity extends AppCompatActivity {
 //                })
 //                .show();
 
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if(mAuth != null) {
+            currentUser = mAuth.getCurrentUser();
+            if (currentUser == null) {
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+            }
         }
 
         chats = HelperLordFunctions.getChatsList(context);
@@ -114,94 +120,106 @@ public class MainActivity extends AppCompatActivity {
     private void renderUI() {
 
         final UserProfile userProfile = Paper.book().read(context.getResources().getString(R.string.users_collection), new UserProfile());
-        if (userProfile.getType().equals("athlete")) {
+        if (userProfile != null && userProfile.getType().equals("athlete")) {
             b.buttonRequests.setVisibility(View.GONE);
             requestsSent = HelperLordFunctions.getRequestsSent(context);
-            b.actionsButton.setText("Search Professional to start connecting.");
-            FirebaseFirestore.getInstance().collection(context.getString(R.string.requests_collection))
-                    .whereEqualTo("uidAthlete", userProfile.getUid())
-                    .whereEqualTo("status", "accepted")
-                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
+            b.actionsButton.setText("Search Professional to start connecting...");
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-                            Request request = document.toObject(Request.class);
-                            ChatsItemModel item = new ChatsItemModel();
+            if(firebaseFirestore != null) {
+                firebaseFirestore.collection(context.getString(R.string.requests_collection))
+                        .whereEqualTo("uidAthlete", userProfile.getUid())
+                        .whereEqualTo("status", "accepted")
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
 
-                            for (UserProfile user : requestsSent) {
-                                if (request.getUidProfessional().equals(user.getUid())) {
-                                    item = new ChatsItemModel(user.getName(), user.getPhotoURL(),
-                                            "New Chat", user.getUid(),
-                                            (Timestamp) new Timestamp(new Date()),
-                                            user.getType(),true);
-                                    ArrayList<String> profs = HelperLordFunctions.getProfessionalConnected(context);
-                                    profs.add(user.getType());
-                                    Paper.book("requests").write("professionalConnected", profs);
-                                    chats.add(item);
-                                    break;
-                                }
-                            }
+                            for (QueryDocumentSnapshot document : task.getResult()) {
 
-                            document.getReference().delete();
-                        }
+                                Request request = document.toObject(Request.class);
+                                ChatsItemModel item = new ChatsItemModel();
 
-                        Collections.sort(chats, new Comparator<ChatsItemModel>() {
-                            @Override
-                            public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
-                                return chatsItemModel.getTimestamp().compareTo(t1.getTimestamp());
-                            }
-                        });
-
-                        //IDHAR ADD GET REQUEST WITH STATUS AS ENDTALK AND AGAIN RENDR CHATS LIST
-                        FirebaseFirestore.getInstance().collection(context.getString(R.string.requests_collection))
-                                .whereEqualTo("uidAthlete", userProfile.getUid())
-                                .whereEqualTo("status", "endTalk")
-                                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-                                for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                                    Request request = doc.toObject(Request.class);
-                                    ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
-                                    for (int i = 0; i < chatsItemModelArrayList.size(); i++) {
-                                        ChatsItemModel chatsItemModel = chatsItemModelArrayList.get(i);
-                                        if (chatsItemModel.getUid().equals(request.getUidProfessional()) && userProfile.getUid().equals(request.getUidAthlete())) {
-                                            chatsItemModelArrayList.remove(i);
-                                            break;
-                                        }
+                                for (UserProfile user : requestsSent) {
+                                    if(request.getUidAthlete().equals("") && request.getUidProfessional().equals("")) {
+                                        break;
                                     }
-                                    Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
-                                    chats = chatsItemModelArrayList;
-                                    Paper.book("requests").write(request.getType(), new ArrayList<String>());
-                                    ArrayList<String> procon = HelperLordFunctions.getProfessionalConnected(context);
-                                    procon.remove(request.getType());
-                                    Paper.book("requests").write("professionalConnected", procon);
-                                    doc.getReference().delete();
+                                    if (request.getUidProfessional().equals(user.getUid())) {
+                                        item = new ChatsItemModel(user.getName(), user.getPhotoURL(),
+                                                "New Chat", user.getUid(),
+                                                (Timestamp) new Timestamp(new Date()),
+                                                user.getType(), true);
+                                        ArrayList<String> profs = HelperLordFunctions.getProfessionalConnected(context);
+                                        profs.add(user.getType());
+                                        Paper.book("requests").write("professionalConnected", profs);
+                                        chats.add(item);
+                                        break;
+                                    }
                                 }
 
-                                Paper.book("chats").write("listOfChats", chats);
-
-                                adapter.notifyDataSetChanged();
-
-                                updateChatsWithTime(chats);
-
+                                document.getReference().delete();
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
 
+                            Collections.sort(chats, new Comparator<ChatsItemModel>() {
+                                @Override
+                                public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
+                                    return chatsItemModel.getTimestamp().compareTo(t1.getTimestamp());
+                                }
+                            });
+
+                            //IDHAR ADD GET REQUEST WITH STATUS AS ENDTALK AND AGAIN RENDR CHATS LIST
+                            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+                            if(firebaseFirestore != null) {
+                                firebaseFirestore.getInstance().collection(context.getString(R.string.requests_collection))
+                                        .whereEqualTo("uidAthlete", userProfile.getUid())
+                                        .whereEqualTo("status", "endTalk")
+                                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                                            Request request = doc.toObject(Request.class);
+                                            ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
+                                            for (int i = 0; i < chatsItemModelArrayList.size(); i++) {
+                                                ChatsItemModel chatsItemModel = chatsItemModelArrayList.get(i);
+                                                if (chatsItemModel.getUid().equals(request.getUidProfessional()) && userProfile.getUid().equals(request.getUidAthlete())) {
+                                                    chatsItemModelArrayList.remove(i);
+                                                    break;
+                                                }
+                                            }
+                                            Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
+                                            chats = chatsItemModelArrayList;
+                                            Paper.book("requests").write(request.getType(), new ArrayList<String>());
+                                            ArrayList<String> procon = HelperLordFunctions.getProfessionalConnected(context);
+                                            procon.remove(request.getType());
+                                            Paper.book("requests").write("professionalConnected", procon);
+                                            doc.getReference().delete();
+                                        }
+
+                                        Paper.book("chats").write("listOfChats", chats);
+
+                                        adapter.notifyDataSetChanged();
+
+                                        updateChatsWithTime(chats);
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
                             }
-                        });
 
-                        Paper.book("chats").write("listOfChats", chats);
-                        adapter.notifyDataSetChanged();
+                            Paper.book("chats").write("listOfChats", chats);
+                            adapter.notifyDataSetChanged();
 
+                        }
                     }
-                }
-            });
+                });
+            }
 
         } else {
             b.buttonSearch.setVisibility(View.GONE);
@@ -211,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 //                        "New Chat", request.getUidAthlete(), new Timestamp(new Date()), "athlete");
 //                chats.add(item);
 //            }
-            b.actionsButton.setText("Check Pending Request to start connecting.");
+            b.actionsButton.setText("Check Pending Request to start connecting...");
 
             Collections.sort(chats, new Comparator<ChatsItemModel>() {
                 @Override
@@ -221,37 +239,40 @@ public class MainActivity extends AppCompatActivity {
             });
 //
 //            Paper.book("chats").write("listOfChats", chats);
-            FirebaseFirestore.getInstance().collection(context.getString(R.string.requests_collection))
-                    .whereEqualTo("uidProfessional", userProfile.getUid())
-                    .whereEqualTo("status", "endTalk").get()
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                        Request request = doc.toObject(Request.class);
+            if(firebaseFirestore != null) {
+                firebaseFirestore.collection(context.getString(R.string.requests_collection))
+                        .whereEqualTo("uidProfessional", userProfile.getUid())
+                        .whereEqualTo("status", "endTalk").get()
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
 
-                        ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
-                        for (int i = 0; i < chatsItemModelArrayList.size(); i++) {
-                            ChatsItemModel chatsItemModel = chatsItemModelArrayList.get(i);
-                            if (chatsItemModel.getUid().equals(request.getUidAthlete()) && userProfile.getUid().equals(request.getUidProfessional())) {
-                                chatsItemModelArrayList.remove(i);
-                                break;
                             }
-                        }
-                        doc.getReference().delete();
-                        Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
-                        chats = chatsItemModelArrayList;
-                        adapter.notifyDataSetChanged();
-                        updateChatsWithTime(chats);
-                    }
-                }
-            });
+                        }).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                            Request request = doc.toObject(Request.class);
 
+                            ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
+                            for (int i = 0; i < chatsItemModelArrayList.size(); i++) {
+                                ChatsItemModel chatsItemModel = chatsItemModelArrayList.get(i);
+                                if (chatsItemModel.getUid().equals(request.getUidAthlete()) && userProfile.getUid().equals(request.getUidProfessional())) {
+                                    chatsItemModelArrayList.remove(i);
+                                    break;
+                                }
+                            }
+                            doc.getReference().delete();
+                            Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
+                            chats = chatsItemModelArrayList;
+                            adapter.notifyDataSetChanged();
+                            updateChatsWithTime(chats);
+                        }
+                    }
+                });
+            }
 
             adapter.notifyDataSetChanged();
 
@@ -389,9 +410,11 @@ public class MainActivity extends AppCompatActivity {
     public void buttonSearchClicked(View view) {
         if (searchF){
 //            new Walkthrough(view,MainActivity.this,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
-            editor.putBoolean("searchF",false);
-            editor.commit();
-            searchF = false;
+            if(editor != null) {
+                editor.putBoolean("searchF", false);
+                editor.commit();
+                searchF = false;
+            }
             Intent intent = new Intent(context,ImageActivity.class);
             startActivity(intent);
         } else {
@@ -403,9 +426,11 @@ public class MainActivity extends AppCompatActivity {
     public void buttonProfileClicked(View view) {
         if (profileEditF){
             new Walkthrough(view, MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
-            editor.putBoolean("profileEditF", false);
-            editor.commit();
-            profileEditF = false;
+            if(editor != null) {
+                editor.putBoolean("profileEditF", false);
+                editor.commit();
+                profileEditF = false;
+            }
         } else {
             Intent intent = new Intent(context, EditProfile.class);
             startActivity(intent);

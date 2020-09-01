@@ -21,6 +21,13 @@ public class Request {
 
 
     public Request() {
+        uidAthlete = "";
+        uidProfessional = "";
+        name = "";
+        title = "";
+        photoURL = "";
+        type = "";
+        status = "";
     }
 
     public Request(String uidAthlete, String uidProfessional, String name, String title, String photoURL, String type, String status) {

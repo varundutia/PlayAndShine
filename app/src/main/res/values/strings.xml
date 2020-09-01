@@ -11,5 +11,7 @@
     <string name="social_instagram"><a href="https://www.instagram.com/playandshinefoundation" /></string>
     <string name="social_youtube"><a href="https://www.youtube.com/channel/UCIjGW18wvXZ65bHgK2t-T2A" /></string>
     <string name="askUs">IN CASE YOU HAVE ANY FURTHER DOUBTS YOU CAN REACH OUT TO US AT <a href="https://playandshine.in/">www.playandshine.in</a></string>
+    <string name="signInFailure">signInWithEmail:failure</string>
+    <string name="signInSuccess">signInWithEmail:success</string>
 
 </resources>

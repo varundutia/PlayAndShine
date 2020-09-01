@@ -15,12 +15,12 @@ import com.github.appintro.AppIntroPageTransformerType;
 
 public class AppIntroActivity extends AppIntro {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getSharedPreferences("myPrefs",MODE_PRIVATE).getBoolean("isWatched",false)){
+        SharedPreferences myPrefs = getSharedPreferences("myPrefs",MODE_PRIVATE);
+        if(myPrefs != null && myPrefs.getBoolean("isWatched",false)){
             startActivity(new Intent(AppIntroActivity.this,LoginActivity.class));
             finish();
         }
@@ -75,9 +75,12 @@ public class AppIntroActivity extends AppIntro {
     @Override
     protected void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        SharedPreferences.Editor editor = getSharedPreferences("myPrefs",MODE_PRIVATE).edit();
-        editor.putBoolean("isWatched",true);
-        editor.commit();
+        SharedPreferences myPrefs = getSharedPreferences("myPrefs",MODE_PRIVATE);
+        if(myPrefs != null) {
+            SharedPreferences.Editor editor = myPrefs.edit();
+            editor.putBoolean("isWatched", true);
+            editor.commit();
+        }
         startActivity(new Intent(AppIntroActivity.this,LoginActivity.class));
         finish();
     }
@@ -85,10 +88,19 @@ public class AppIntroActivity extends AppIntro {
     @Override
     protected void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-        SharedPreferences.Editor editor = getSharedPreferences("myPrefs",MODE_PRIVATE).edit();
-        editor.putBoolean("isWatched",true);
-        editor.commit();
+        SharedPreferences myPrefs = getSharedPreferences("myPrefs",MODE_PRIVATE);
+        if(myPrefs != null) {
+            SharedPreferences.Editor editor = myPrefs.edit();
+            editor.putBoolean("isWatched", true);
+            editor.commit();
+        }
         startActivity(new Intent(AppIntroActivity.this,LoginActivity.class));
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
 }

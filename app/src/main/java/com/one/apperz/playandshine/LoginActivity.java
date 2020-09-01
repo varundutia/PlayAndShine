@@ -54,10 +54,16 @@ public class LoginActivity extends AppCompatActivity {
         binding.socialInstagram.setMovementMethod(LinkMovementMethod.getInstance());
         binding.socialYoutube.setMovementMethod(LinkMovementMethod.getInstance());
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+
+        if(mAuth == null) {
+            Log.d("TAG", "Firebase Instance Not Found");
+        }
+        else {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null && !user.getEmail().equals("")) {
+                startActivity(new Intent(context, MainActivity.class));
+                finish();
+            }
         }
 
         binding.showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -76,34 +82,40 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     public void createAccount(View view) {
-        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        startActivity(new Intent(this, RegisterActivity.class));
         finish();
     }
 
     public void login(View view) {
+
         String EMAIL = binding.inputEmail.getText().toString();
         boolean valid = true;
         if (EMAIL.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(EMAIL).matches()) {
-            binding.inputEmail.setError("enter a valid email address");
+            binding.inputEmail.setError("Enter a valid email address!");
             valid = false;
         } else {
             binding.inputEmail.setError(null);
         }
 
-        if (valid) {
+        if (valid && mAuth != null) {
             mAuth.signInWithEmailAndPassword(EMAIL, binding.inputPassword.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Log.d("TAG", "signInWithEmail:success");
+                                Log.d("TAG", getResources().getString(R.string.signInSuccess));
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Log.w("TAG", "signInWithEmail:failure", task.getException());
+                                Log.w("TAG", getResources().getString(R.string.signInFailure), task.getException());
                                 Toast.makeText(LoginActivity.this, task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
                                 updateUI(null);
@@ -170,7 +182,9 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(context, "Error Logging in. Try again", Toast.LENGTH_SHORT).show();
-                    mAuth.signOut();
+                    if(mAuth != null) {
+                        mAuth.signOut();
+                    }
                 }
             });
         }
