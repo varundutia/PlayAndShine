@@ -63,7 +63,10 @@ public class Requests extends AppCompatActivity {
         refOfDocumentsRequests = new ArrayList<>();
         context = this;
         db = FirebaseFirestore.getInstance();
-
+        if(db == null){
+            Intent requests = new Intent(this,Requests.class);
+            startActivity(requests);
+        }
         requests = new ArrayList<>();
         adapter = new CustomAdapter(requests);
         b.listRequests.setAdapter(adapter);
