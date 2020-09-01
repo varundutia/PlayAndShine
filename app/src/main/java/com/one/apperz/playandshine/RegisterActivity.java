@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i!=0){
-                    if (SELECTED_TYPE=="athlete"){
+                    if (SELECTED_TYPE.equals("athlete")){
                         EXPERIENCE = HelperLordConstant.LEVEL_OF_ATHLETE.get(i);
                     }else if(!SELECTED_TYPE.equals("")){
                         EXPERIENCE = HelperLordConstant.YEARS_OF_EXPERIENCE.get(i);
