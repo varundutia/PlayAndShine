@@ -25,7 +25,7 @@ public class ImageActivity extends AppCompatActivity {
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPage);
         ImageAdapter adapterView = new ImageAdapter(this);
-        mDotLayout = (LinearLayout) findViewById(R.id.linearLayout);
+//        mDotLayout = (LinearLayout) findViewById(R.id.linearLayout);
         finish = findViewById(R.id.buttonFinish);
         mViewPager.setAdapter(adapterView);
     }
