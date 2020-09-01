@@ -14,8 +14,6 @@ import android.widget.TextView;
 import static android.graphics.Color.rgb;
 
 public class ImageActivity extends AppCompatActivity {
-//    private TextView[] mDots;
-    LinearLayout mDotLayout;
     private Button finish;
 
     @Override
@@ -25,7 +23,6 @@ public class ImageActivity extends AppCompatActivity {
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPage);
         ImageAdapter adapterView = new ImageAdapter(this);
-//        mDotLayout = (LinearLayout) findViewById(R.id.linearLayout);
         finish = findViewById(R.id.buttonFinish);
         mViewPager.setAdapter(adapterView);
     }

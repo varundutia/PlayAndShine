@@ -225,7 +225,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user!=null) {
-            final UserProfile userProfile = new UserProfile(user.getUid(),binding.inputFname.getText().toString()+" "+binding.inputLname.getText().toString(),binding.inputEmail.getText().toString(),SELECTED_SPORT,SELECTED_TYPE,"","",0,"","",EXPERIENCE);
+            String fnn=binding.inputFname.getText().toString();
+            String lnn=binding.inputLname.getText().toString();
+            String namee = fnn+" "+lnn;
+            final UserProfile userProfile = new UserProfile(user.getUid(),namee,binding.inputEmail.getText().toString(),SELECTED_SPORT,SELECTED_TYPE,"","",0,"","",EXPERIENCE);
             FirebaseFirestore.getInstance().collection(context.getResources().getString(R.string.users_collection)).document(user.getUid()).set(userProfile).addOnSuccessListener(
                     new OnSuccessListener<Void>() {
                         @Override

@@ -78,6 +78,7 @@ public class EditProfile extends AppCompatActivity {
         Log.d("TAG", "renderUI: ");
         userProfile = Paper.book().read(context.getResources().getString(R.string.users_collection), new UserProfile());
         int x = userProfile.getName().indexOf(" ");
+        Log.d("Nameindex",userProfile.getName());
         if (x != -1) {
             b.profileFirstName.getEditText().setText(userProfile.getName().substring(0, x));
             b.profileLastName.getEditText().setText(userProfile.getName().substring(x + 1));
