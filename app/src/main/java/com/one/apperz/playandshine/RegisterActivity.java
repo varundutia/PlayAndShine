@@ -187,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (EXPERIENCE == ""){
+        if (EXPERIENCE.equals("")){
             valid = false;
             Toast.makeText(context, "Please Select Experience", Toast.LENGTH_SHORT).show();
         }

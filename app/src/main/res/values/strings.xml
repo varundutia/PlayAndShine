@@ -13,5 +13,7 @@
     <string name="askUs">IN CASE YOU HAVE ANY FURTHER DOUBTS YOU CAN REACH OUT TO US AT <a href="https://playandshine.in/">www.playandshine.in</a></string>
     <string name="signInFailure">signInWithEmail:failure</string>
     <string name="signInSuccess">signInWithEmail:success</string>
+    <string name="profileEditF">profileEditF</string>
+    <string name="searchF">searchF</string>
 
 </resources>

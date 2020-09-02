@@ -35,8 +35,9 @@
             android:textSize="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@+id/buttonBack"
             />
+<!--            android:layout_toRightOf="@+id/buttonBack"-->
+
 
     </RelativeLayout>
 
@@ -52,6 +53,7 @@
             android:paddingLeft="24dp"
             android:paddingTop="70dp"
             android:paddingRight="24dp">
+<!--            android:background="#1068D3">-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -335,7 +337,7 @@
                 android:layout_marginVertical="8dp"
                 android:id="@+id/inputSport"
                 app:hintTextColor="#fff"
-                android:popupBackground="#2196F3"
+                android:popupBackground="#1068D3"
                 />
 
             <!-- Email Label -->
@@ -347,7 +349,7 @@
                 android:id="@+id/inputExperience"
                 android:visibility="gone"
                 app:hintTextColor="#fff"
-                android:popupBackground="#2196F3"
+                android:popupBackground="#1068D3"
                 />
 
             <!-- Email Label -->

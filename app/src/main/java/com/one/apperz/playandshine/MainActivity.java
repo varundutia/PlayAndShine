@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         Paper.init(context);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if(pref != null) {
-            profileEditF = pref.getBoolean("profileEditF", true);
-            searchF = pref.getBoolean("searchF", true);
+            profileEditF = pref.getBoolean(getResources().getString(R.string.profileEditF), true);
+            searchF = pref.getBoolean(getResources().getString(R.string.searchF), true);
             editor = pref.edit();
         }
 
@@ -411,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
         if (searchF){
 //            new Walkthrough(view,MainActivity.this,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
             if(editor != null) {
-                editor.putBoolean("searchF", false);
+                editor.putBoolean(getResources().getString(R.string.searchF), false);
                 editor.commit();
                 searchF = false;
             }
@@ -427,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
         if (profileEditF){
             new Walkthrough(view, MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
             if(editor != null) {
-                editor.putBoolean("profileEditF", false);
+                editor.putBoolean(getResources().getString(R.string.profileEditF), false);
                 editor.commit();
                 profileEditF = false;
             }
