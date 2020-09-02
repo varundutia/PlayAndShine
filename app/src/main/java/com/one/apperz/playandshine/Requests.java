@@ -175,8 +175,8 @@ public class Requests extends AppCompatActivity {
 
                     refOfDocumentsRequests.get(position).set(newChat, SetOptions.merge());
                     newChat.clear();
-                    newChat.put("athlete", request.getUidAthlete());
-                    newChat.put("professional", request.getUidProfessional());
+                    newChat.put(getResources().getString(R.string.athlete), request.getUidAthlete());
+                    newChat.put(getResources().getString(R.string.professional), request.getUidProfessional());
 
                     db.collection(context.getString(R.string.chat_collection))
                             .document(request.getUidAthlete()+request.getUidProfessional())

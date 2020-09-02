@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i!=0){
-                    if (SELECTED_TYPE.equals("athlete")){
+                    if (SELECTED_TYPE.equals(getResources().getString(R.string.athlete))){
                         EXPERIENCE = HelperLordConstant.LEVEL_OF_ATHLETE.get(i);
                     }else if(!SELECTED_TYPE.equals("")){
                         EXPERIENCE = HelperLordConstant.YEARS_OF_EXPERIENCE.get(i);
@@ -109,12 +109,12 @@ public class RegisterActivity extends AppCompatActivity {
             view.setBackground(ContextCompat.getDrawable(context, R.drawable.background_selected_you_are));
         }
 
-        if(SELECTED_TYPE.equals("athlete")||SELECTED_TYPE.equals("coach"))
+        if(SELECTED_TYPE.equals(getResources().getString(R.string.athlete))||SELECTED_TYPE.equals(getResources().getString(R.string.coach)))
             binding.inputSport.setVisibility(View.VISIBLE);
         else
             binding.inputSport.setVisibility(View.GONE);
 
-        if(SELECTED_TYPE.equals("athlete")){
+        if(SELECTED_TYPE.equals(getResources().getString(R.string.athlete))){
             adapterListOfExperience = new ArrayAdapter(this,R.layout.custom_spinner,HelperLordConstant.LEVEL_OF_ATHLETE);
             adapterListOfExperience.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             //Setting the ArrayAdapter data on the Spinner
@@ -182,7 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
             binding.inputPassword.setError(null);
         }
 
-        if ((SELECTED_TYPE.equals("athlete")||SELECTED_TYPE.equals("coach")) && SELECTED_SPORT.equals("")) {
+        if ((SELECTED_TYPE.equals(getResources().getString(R.string.athlete))||SELECTED_TYPE.equals(getResources().getString(R.string.coach))) && SELECTED_SPORT.equals("")) {
             Toast.makeText(context, "Please Select Sport", Toast.LENGTH_SHORT).show();
             valid = false;
         }

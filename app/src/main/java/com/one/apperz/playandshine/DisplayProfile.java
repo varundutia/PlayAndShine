@@ -150,7 +150,7 @@ public class DisplayProfile extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentReference documentReference) {
 
-                if (userProfile.getType().equals("athlete")) {
+                if (userProfile.getType().equals(getResources().getString(R.string.athlete))) {
                     ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
                     for (int i = 0; i < chatsItemModelArrayList.size(); i++) {
                         ChatsItemModel chatsItemModel = chatsItemModelArrayList.get(i);

@@ -275,7 +275,6 @@ public class Search extends AppCompatActivity {
                     startActivityForResult(intent,12345);
                 }
             });
-
             return item;
         }
     }
