@@ -35,7 +35,7 @@
                 android:layout_height="30dp"
                 android:id="@+id/buttonSearch"
                 android:onClick="buttonSearchClicked"
-                android:background="@drawable/ic_search"/>
+                android:background="@drawable/connect_icon"/>
             <TextView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
