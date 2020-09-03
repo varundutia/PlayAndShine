@@ -23,7 +23,7 @@ public class Walkthrough {
                         if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED)
                         {
                             // User has pressed the prompt target
-                            Toast.makeText(activity.getApplicationContext(),"done",Toast.LENGTH_LONG).show();
+//                            Toast.makeText(activity.getApplicationContext(),"done",Toast.LENGTH_LONG).show();
                         }
                     }
                 })
