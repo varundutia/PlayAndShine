@@ -78,8 +78,10 @@ public class AppIntroActivity extends AppIntro {
         SharedPreferences myPrefs = getSharedPreferences("myPrefs",MODE_PRIVATE);
         if(myPrefs != null) {
             SharedPreferences.Editor editor = myPrefs.edit();
-            editor.putBoolean("isWatched", true);
-            editor.commit();
+            if(editor!= null) {
+                editor.putBoolean("isWatched", true);
+                editor.commit();
+            }
         }
         startActivity(new Intent(AppIntroActivity.this,LoginActivity.class));
         finish();
@@ -91,8 +93,10 @@ public class AppIntroActivity extends AppIntro {
         SharedPreferences myPrefs = getSharedPreferences("myPrefs",MODE_PRIVATE);
         if(myPrefs != null) {
             SharedPreferences.Editor editor = myPrefs.edit();
-            editor.putBoolean("isWatched", true);
-            editor.commit();
+            if(editor!= null) {
+                editor.putBoolean("isWatched", true);
+                editor.commit();
+            }
         }
         startActivity(new Intent(AppIntroActivity.this,LoginActivity.class));
         finish();

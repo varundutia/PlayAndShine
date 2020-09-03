@@ -3,17 +3,17 @@ package com.one.apperz.playandshine.model;
 import java.io.Serializable;
 
 public class UserProfile implements Serializable {
-    private String uid="";
-    private String name="";
-    private String email="";
-    private String sport="";
-    private String type="";
-    private String photoURL="";
-    private String achievement="";
+    private String uid;
+    private String name;
+    private String email;
+    private String sport;
+    private String type;
+    private String photoURL;
+    private String achievement;
     private int age;
-    private String phone="";
-    private String location="";
-    private String experience="";
+    private String phone;
+    private String location;
+    private String experience;
 
     public UserProfile(String uid,String name, String email, String sport, String type, String photoURL, String achievement, int age, String phone, String location,String experience) {
         this.name = name;
@@ -30,6 +30,17 @@ public class UserProfile implements Serializable {
     }
 
     public UserProfile() {
+        this.name = "";
+        this.email = "";
+        this.sport = "";
+        this.type = "";
+        this.photoURL = "";
+        this.achievement = "";
+        this.age = 0;
+        this.phone = "";
+        this.location = "";
+        this.uid = "";
+        this.experience = "";
     }
 
     public String getExperience() {

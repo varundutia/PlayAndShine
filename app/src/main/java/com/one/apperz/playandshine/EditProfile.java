@@ -77,11 +77,11 @@ public class EditProfile extends AppCompatActivity {
     private void renderUI() {
         Log.d("TAG", "renderUI: ");
         userProfile = Paper.book().read(context.getResources().getString(R.string.users_collection), new UserProfile());
-        int x = userProfile.getName().indexOf(" ");
+        int spaceIndex = userProfile.getName().indexOf(" ");
         Log.d("Nameindex",userProfile.getName());
-        if (x != -1) {
-            b.profileFirstName.getEditText().setText(userProfile.getName().substring(0, x));
-            b.profileLastName.getEditText().setText(userProfile.getName().substring(x + 1));
+        if (spaceIndex != -1) {
+            b.profileFirstName.getEditText().setText(userProfile.getName().substring(0, spaceIndex));
+            b.profileLastName.getEditText().setText(userProfile.getName().substring(spaceIndex + 1));
         } else {
             b.profileFirstName.getEditText().setText(userProfile.getName());
             b.profileLastName.getEditText().setText("");
