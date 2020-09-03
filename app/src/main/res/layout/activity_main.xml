@@ -12,17 +12,24 @@
         android:id="@+id/appBar"
         android:padding="16dp"
         >
+        <TextView
+            android:id="@+id/buttonBack"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/logo" />
 
         <TextView
             android:id="@+id/activityTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_height="@dimen/icon_height"
             android:layout_toLeftOf="@+id/buttonSendRequestIcon"
             android:layout_toRightOf="@+id/buttonBack"
             android:text="Play and Shine"
+            android:layout_marginLeft="10dp"
             android:textColor="#000"
-            android:textSize="25dp" />
+            android:textSize="22dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,10 +38,21 @@
             android:layout_alignParentRight="true">
 
             <TextView
+                android:id="@+id/buttonRequests"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="@dimen/icon_height"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/ic_request"
+                android:onClick="buttonRequestsClicked" />
+
+            <TextView
                 android:layout_width="@dimen/icon_width"
                 android:layout_height="@dimen/icon_height"
                 android:id="@+id/buttonSearch"
                 android:onClick="buttonSearchClicked"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/connect_icon"/>
             <TextView
                 android:layout_width="@dimen/icon_width"
@@ -44,18 +62,6 @@
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/ic_user"/>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/buttonRequests"
-            android:layout_width="@dimen/icon_width"
-            android:layout_height="@dimen/icon_height"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="86dp"
-            android:background="@drawable/ic_request"
-            android:onClick="buttonRequestsClicked" />
-
 
     </RelativeLayout>
 
