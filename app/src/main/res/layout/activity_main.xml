@@ -31,14 +31,14 @@
             android:layout_alignParentRight="true">
 
             <TextView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="@dimen/icon_height"
                 android:id="@+id/buttonSearch"
                 android:onClick="buttonSearchClicked"
                 android:background="@drawable/connect_icon"/>
             <TextView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="@dimen/icon_height"
                 android:id="@+id/buttonProfile"
                 android:onClick="buttonProfileClicked"
                 android:layout_marginLeft="10dp"
@@ -47,8 +47,8 @@
 
         <TextView
             android:id="@+id/buttonRequests"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="0dp"

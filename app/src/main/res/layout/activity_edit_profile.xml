@@ -14,18 +14,19 @@
         android:padding="16dp"
         >
         <TextView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
             android:background="@drawable/ic_back"
             android:id="@+id/buttonBack"
             android:layout_centerVertical="true"
             android:onClick="buttonBackClicked"
+            android:visibility="invisible"
             />
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/icon_height"
             android:id="@+id/activityTitle"
-            android:text="Edit Profile"
+            android:text="Profile"
             android:textColor="#000"
             android:textSize="20dp"
             android:layout_centerVertical="true"
@@ -34,8 +35,8 @@
             android:layout_toRightOf="@+id/buttonBack"
             />
         <TextView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
             android:id="@+id/buttonSaveIcon"
             android:onClick="saveClicked"
             android:layout_centerVertical="true"
@@ -43,8 +44,8 @@
             android:layout_alignParentRight="true"/>
 
         <TextView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
             android:id="@+id/buttonShare"
             android:onClick="shareApp"
             android:elevation="50dp"
@@ -54,8 +55,8 @@
             android:background="@drawable/ic_share"/>
 
         <TextView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
             android:id="@+id/buttonHelp"
             android:onClick="helpClicked"
             android:elevation="50dp"
