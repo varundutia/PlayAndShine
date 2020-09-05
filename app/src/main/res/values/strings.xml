@@ -18,4 +18,6 @@
     <string name="athlete">athlete</string>
     <string name="coach">coach</string>
     <string name="professional">professional</string>
+    <string name="facebook_app_id">901765870313133</string>
+    <string name="fb_login_protocol_scheme">fb901765870313133</string>
 </resources>

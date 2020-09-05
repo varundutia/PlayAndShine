@@ -107,7 +107,8 @@
                     android:background="@drawable/social_facebook"
                     android:text="@string/social_facebook"
                     android:id="@+id/social_facebook"
-                    android:layout_marginHorizontal="8dp"/>
+                    android:layout_marginHorizontal="8dp"
+                    android:onClick="fbLoginButton"/>
 
                 <TextView
                     android:layout_width="32dp"
@@ -115,7 +116,8 @@
                     android:background="@drawable/social_instagram"
                     android:text="@string/social_instagram"
                     android:id="@+id/social_instagram"
-                    android:layout_marginHorizontal="8dp"/>
+                    android:layout_marginHorizontal="8dp"
+                    android:onClick="googleLoginButton"/>
 
                 <TextView
                     android:layout_width="32dp"
