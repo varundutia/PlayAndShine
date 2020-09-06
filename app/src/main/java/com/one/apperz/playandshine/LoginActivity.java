@@ -156,6 +156,7 @@ public class LoginActivity extends AppCompatActivity {
         UserProfile user =new UserProfile();
         user.setName(account.getDisplayName());
         user.setEmail(account.getEmail());
+        user.setPhotoURL(String.valueOf(account.getPhotoUrl()));
         Intent intent = new Intent(this,RegisterActivity.class);
         intent.putExtra("user",user);
         startActivity(intent);

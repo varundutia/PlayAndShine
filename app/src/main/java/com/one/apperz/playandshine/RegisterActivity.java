@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     ArrayAdapter adapterListOfExperience;
 
     FirebaseAuth mAuth;
+    private String photoURL ="";
 
 
     @Override
@@ -59,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
             binding.inputFname.setEnabled(false);
             binding.inputLname.setEnabled(false);
             binding.inputEmail.setEnabled(false);
+            photoURL=user.getPhotoURL();
         }
 
         binding.inputSport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -239,7 +241,7 @@ public class RegisterActivity extends AppCompatActivity {
             String fnn=binding.inputFname.getText().toString();
             String lnn=binding.inputLname.getText().toString();
             String namee = fnn+" "+lnn;
-            final UserProfile userProfile = new UserProfile(user.getUid(),namee,binding.inputEmail.getText().toString(),SELECTED_SPORT,SELECTED_TYPE,"","",0,"","",EXPERIENCE);
+            final UserProfile userProfile = new UserProfile(user.getUid(),namee,binding.inputEmail.getText().toString(),SELECTED_SPORT,SELECTED_TYPE,photoURL,"",0,"","",EXPERIENCE);
             FirebaseFirestore.getInstance().collection(context.getResources().getString(R.string.users_collection)).document(user.getUid()).set(userProfile).addOnSuccessListener(
                     new OnSuccessListener<Void>() {
                         @Override
