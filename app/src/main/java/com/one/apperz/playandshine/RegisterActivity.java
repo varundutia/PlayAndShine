@@ -49,7 +49,17 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         context = this;
         Paper.init(context);
-
+        UserProfile user = (UserProfile)getIntent().getSerializableExtra("user");
+        if(user!=null){
+            String name = user.getName();
+            int x=name.indexOf(" ");
+            binding.inputFname.setText(name.substring(0,x));
+            binding.inputLname.setText(name.substring(x));
+            binding.inputEmail.setText(user.getEmail());
+            binding.inputFname.setEnabled(false);
+            binding.inputLname.setEnabled(false);
+            binding.inputEmail.setEnabled(false);
+        }
 
         binding.inputSport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

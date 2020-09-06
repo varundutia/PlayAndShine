@@ -65,9 +65,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
+//            mAuth.getInstance().signOut();
             startActivity(new Intent(this,MainActivity.class));
         }
-
     }
 
     @Override
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.socialYoutube.setMovementMethod(LinkMovementMethod.getInstance());
         mAuth = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
-        createGoogleRequest();
+//        createGoogleRequest();
         if(mAuth == null) {
             Log.d("TAG", "Firebase Instance Not Found");
         }
@@ -120,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     private void signIn() {
+        createGoogleRequest();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -152,14 +153,22 @@ public class LoginActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
-        mAuth.signInWithCredential(credential).addOnCompleteListener(this, task -> {
-            if(task.isSuccessful()){
-                FirebaseUser user = mAuth.getCurrentUser();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            }else{
-                Toast.makeText(LoginActivity.this,"failed",Toast.LENGTH_LONG).show();
-            }
-        });
+        UserProfile user =new UserProfile();
+        user.setName(account.getDisplayName());
+        user.setEmail(account.getEmail());
+        Intent intent = new Intent(this,RegisterActivity.class);
+        intent.putExtra("user",user);
+        startActivity(intent);
+//        Toast.makeText(this,user.getName(),Toast.LENGTH_SHORT).show();
+//        mAuth.signInWithCredential(credential).addOnCompleteListener(this, task -> {
+////            if(task.isSuccessful()){
+////                FirebaseUser user = mAuth.getCurrentUser();
+////                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+////            }else{
+////                Toast.makeText(LoginActivity.this,"failed",Toast.LENGTH_LONG).show();
+////            }
+////        });
+
 
     }
 
@@ -318,7 +327,6 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void googleLoginButton(View view){
         signIn();
-
     }
 
 }
