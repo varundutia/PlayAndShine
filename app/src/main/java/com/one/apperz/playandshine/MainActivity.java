@@ -52,6 +52,18 @@ import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity {
 
+//    public static void setFontAs(String font, TextView textView, Context context) {
+//        AssetManager assetManager = context.getApplicationContext().getAssets();
+//        Typeface typeface = Typeface.createFromAsset(assetManager, String.format(Locale.US, "fonts/%s", font));
+//        textView.setTypeface(typeface);
+//    }
+//
+//    public static void setFontAs(String font, Button button, Context context) {
+//        AssetManager assetManager = context.getApplicationContext().getAssets();
+//        Typeface typeface = Typeface.createFromAsset(assetManager, String.format(Locale.US, "fonts/%s", font));
+//        button.setTypeface(typeface);
+//    }
+
     Context context;
     ActivityMainBinding b;
     FirebaseUser currentUser;

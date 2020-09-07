@@ -81,8 +81,9 @@
                     android:onClick="professionalSelected"
                     android:tag="coach">
                     <ImageButton
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:padding="10dp"
+                        android:layout_width="@dimen/image_button_height"
+                        android:layout_height="@dimen/image_button_width"
                         android:onClick="professionalSelected"
                         android:tag="coach"
                         android:background="@drawable/pro_coach"/>
