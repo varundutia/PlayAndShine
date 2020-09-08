@@ -36,6 +36,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.one.apperz.playandshine.databinding.ActivityLoginBinding;
@@ -124,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -153,13 +155,34 @@ public class LoginActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
-        UserProfile user =new UserProfile();
-        user.setName(account.getDisplayName());
-        user.setEmail(account.getEmail());
-        user.setPhotoURL(String.valueOf(account.getPhotoUrl()));
-        Intent intent = new Intent(this,RegisterActivity.class);
-        intent.putExtra("user",user);
-        startActivity(intent);
+        mAuth.fetchSignInMethodsForEmail(account.getEmail()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+            @Override
+            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                Log.d("email_exists",""+task.getResult().getSignInMethods().size());
+                if (task.getResult().getSignInMethods().size() == 0){
+                    // email not existed
+                    UserProfile user =new UserProfile();
+                    user.setName(account.getDisplayName());
+                    user.setEmail(account.getEmail());
+                    user.setPhotoURL(String.valueOf(account.getPhotoUrl()));
+                    Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                    intent.putExtra("user",user);
+                    intent.putExtra("gSign","true");
+                    startActivity(intent);
+                }else {
+                    // email existed
+                    binding.inputEmail.setText(account.getEmail());
+                    binding.inputPassword.setText("000000");
+                    login1();
+                }
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
 //        Toast.makeText(this,user.getName(),Toast.LENGTH_SHORT).show();
 //        mAuth.signInWithCredential(credential).addOnCompleteListener(this, task -> {
 ////            if(task.isSuccessful()){
@@ -182,10 +205,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this, RegisterActivity.class));
         finish();
     }
-
-    public void login(View view) {
-
+    void login1(){
         String EMAIL = binding.inputEmail.getText().toString();
+        String password = binding.inputPassword.getText().toString();
         boolean valid = true;
         if (EMAIL.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(EMAIL).matches()) {
             binding.inputEmail.setError("Enter a valid email address!");
@@ -193,7 +215,9 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             binding.inputEmail.setError(null);
         }
-
+//        if(password.equals("000000")){
+//            binding.inputPassword.setError("Wrong Password");
+//        }
         if (valid && mAuth != null) {
             mAuth.signInWithEmailAndPassword(EMAIL, binding.inputPassword.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -219,6 +243,10 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void login(View view) {
+        login1();
     }
 
     private void updateUI(final FirebaseUser user) {

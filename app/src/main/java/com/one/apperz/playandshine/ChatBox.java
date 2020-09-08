@@ -34,7 +34,36 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import io.paperdb.Paper;
-
+//try {
+//
+//        FirebaseFirestore cloudInstance = FirebaseFirestore.getInstance();
+//
+//        CollectionReference chatCollection = getReference();
+//
+//        //chatCollection.document("S0SbTmZ7d6ih293itd5T");
+//
+//        chatCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//@Override
+//public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//        if (e != null) {
+//        Log.w("TAG", "Listen failed.", e);
+//        return;
+//        }
+//
+//        if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+//        List<DocumentChange> documentChanges = (ArrayList<DocumentChange>) queryDocumentSnapshots.getDocumentChanges();
+//        Toast.makeText(getApplicationContext() , "Current data: " + documentChanges.get(documentChanges.size() - 1).getDocument(), Toast.LENGTH_SHORT).show();
+//        Log.d("TAG", "Current data: " + queryDocumentSnapshots.getDocumentChanges().get(0));
+//        } else {
+//        Log.d("TAG", "Current data: null");
+//        }
+//        }
+//        });
+//
+//        }
+//        catch (Exception e) {
+//        Log.d("Exception", "Cloud Firestore Chats Exception");
+//        }
 public class ChatBox extends AppCompatActivity {
 
     Context context;

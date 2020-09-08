@@ -15,11 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.one.apperz.playandshine.databinding.ActivityRegisterBinding;
 import com.one.apperz.playandshine.helperLord.HelperLordConstant;
@@ -51,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         context = this;
         Paper.init(context);
         UserProfile user = (UserProfile)getIntent().getSerializableExtra("user");
+//        Toast.makeText(this,String.valueOf(gSign),Toast.LENGTH_LONG).show();
         if(user!=null){
             String name = user.getName();
             int x=name.indexOf(" ");
@@ -60,6 +63,10 @@ public class RegisterActivity extends AppCompatActivity {
             binding.inputFname.setEnabled(false);
             binding.inputLname.setEnabled(false);
             binding.inputEmail.setEnabled(false);
+            binding.inputPassword.setText("000000");
+            binding.inputConfirmPassword.setText("000000");
+            binding.inputPassword.setEnabled(false);
+            binding.inputConfirmPassword.setEnabled(false);
             photoURL=user.getPhotoURL();
         }
 
@@ -143,9 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
     }
-
     public void signUp(View view) {
-
         String FNAME = binding.inputFname.getText().toString();
         String LNAME = binding.inputLname.getText().toString();
         String EMAIL = binding.inputEmail.getText().toString();
@@ -188,7 +193,7 @@ public class RegisterActivity extends AppCompatActivity {
             binding.inputPassword.setError(null);
         }
 
-        if ( PASSWORD.length() < 6 ) {
+        if ( PASSWORD.length() < 6) {
             binding.inputPassword.setError("greater than 5 character");
             valid = false;
         } else {
@@ -261,4 +266,5 @@ public class RegisterActivity extends AppCompatActivity {
 //        startActivity(new Intent(this,LoginActivity.class));
 ////        finish();
 //    }
+
 }
