@@ -1,5 +1,9 @@
 package com.one.apperz.playandshine;
 
+//import android.app.Notification;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +29,13 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.one.apperz.playandshine.databinding.ActivityChatBoxBinding;
 import com.one.apperz.playandshine.helperLord.HelperLordFunctions;
 import com.one.apperz.playandshine.model.ChatsItemModel;
@@ -33,37 +43,10 @@ import com.one.apperz.playandshine.model.Message;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import io.paperdb.Paper;
-//try {
-//
-//        FirebaseFirestore cloudInstance = FirebaseFirestore.getInstance();
-//
-//        CollectionReference chatCollection = getReference();
-//
-//        //chatCollection.document("S0SbTmZ7d6ih293itd5T");
-//
-//        chatCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//@Override
-//public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//        if (e != null) {
-//        Log.w("TAG", "Listen failed.", e);
-//        return;
-//        }
-//
-//        if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-//        List<DocumentChange> documentChanges = (ArrayList<DocumentChange>) queryDocumentSnapshots.getDocumentChanges();
-//        Toast.makeText(getApplicationContext() , "Current data: " + documentChanges.get(documentChanges.size() - 1).getDocument(), Toast.LENGTH_SHORT).show();
-//        Log.d("TAG", "Current data: " + queryDocumentSnapshots.getDocumentChanges().get(0));
-//        } else {
-//        Log.d("TAG", "Current data: null");
-//        }
-//        }
-//        });
-//
-//        }
-//        catch (Exception e) {
-//        Log.d("Exception", "Cloud Firestore Chats Exception");
-//        }
+
 public class ChatBox extends AppCompatActivity {
 
     Context context;
@@ -83,7 +66,7 @@ public class ChatBox extends AppCompatActivity {
         selfUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         context = this;
         chatsItemModel = getIntent().getParcelableExtra("content");
-
+        sendNotification(context,1000);
         query = getReference().orderBy("timestamp", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Message> options = new FirestoreRecyclerOptions.Builder<Message>().setQuery(query, Message.class).build();
 
@@ -98,6 +81,7 @@ public class ChatBox extends AppCompatActivity {
             }
         });
         b.chatsLists.setAdapter(adapter);
+        note(context);
 
 
         if (!chatsItemModel.getPhotoURL().equals(""))
@@ -137,6 +121,7 @@ public class ChatBox extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         adapter.startListening();
+
 //        registration = messageRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 //            @Override
 //            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -156,6 +141,55 @@ public class ChatBox extends AppCompatActivity {
 //                }
 //            }
 //        });
+
+    }
+    private void note(Context context){
+        try {
+
+            FirebaseFirestore cloudInstance = FirebaseFirestore.getInstance();
+
+            CollectionReference chatCollection = getReference();
+
+            //chatCollection.document("S0SbTmZ7d6ih293itd5T");
+
+            chatCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w("TAG", "Listen failed.", e);
+                        return;
+                    }
+
+                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                        List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
+
+                        Toast.makeText(context , "Current data: " + documentChanges.get(documentChanges.size() - 1).getDocument(), Toast.LENGTH_SHORT).show();
+                        Log.d("TAG", "Current data: " + queryDocumentSnapshots.getDocumentChanges().get(0));
+                    } else {
+                        Log.d("TAG", "Current data: null");
+                    }
+                }
+            });
+
+        }
+        catch (Exception e) {
+            Log.d("Exception", "Cloud Firestore Chats Exception");
+        }
+    }
+    private void sendNotification(Context applicationContext, double saved_price) {
+
+        NotificationManager NM;
+        NM = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+        PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(),0);
+
+        Notification notify = new Notification.Builder(applicationContext)
+                .setContentTitle("Price went below " + String.valueOf(saved_price))
+                .setContentText("Price Alert")
+                .setSmallIcon(R.drawable.logo)
+                .build();
+
+        NM.notify(0, notify);
 
     }
 
