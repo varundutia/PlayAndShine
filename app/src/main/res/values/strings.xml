@@ -15,6 +15,7 @@
     <string name="signInSuccess">signInWithEmail:success</string>
     <string name="profileEditF">profileEditF</string>
     <string name="searchF">searchF</string>
+    <string name="connectF">connectF</string>
     <string name="athlete">athlete</string>
     <string name="coach">coach</string>
     <string name="professional">professional</string>
