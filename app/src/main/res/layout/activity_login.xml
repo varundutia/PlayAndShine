@@ -101,31 +101,31 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp">
 
-                <TextView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/social_facebook"
-                    android:text="@string/social_facebook"
-                    android:id="@+id/social_facebook"
-                    android:layout_marginHorizontal="8dp"
-                    android:onClick="fbLoginButton"/>
+<!--                <TextView-->
+<!--                    android:layout_width="32dp"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:background="@drawable/social_facebook"-->
+<!--                    android:text="@string/social_facebook"-->
+<!--                    android:id="@+id/social_facebook"-->
+<!--                    android:layout_marginHorizontal="8dp"-->
+<!--                    android:onClick="fbLoginButton"/>-->
 
                 <TextView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/social_instagram"
+                    android:background="@drawable/ic_google"
                     android:text="@string/social_instagram"
-                    android:id="@+id/social_instagram"
+                    android:id="@+id/google_btn"
                     android:layout_marginHorizontal="8dp"
                     android:onClick="googleLoginButton"/>
 
-                <TextView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/social_youtube"
-                    android:text="@string/social_youtube"
-                    android:id="@+id/social_youtube"
-                    android:layout_marginHorizontal="8dp"/>
+<!--                <TextView-->
+<!--                    android:layout_width="32dp"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:background="@drawable/social_youtube"-->
+<!--                    android:text="@string/social_youtube"-->
+<!--                    android:id="@+id/social_youtube"-->
+<!--                    android:layout_marginHorizontal="8dp"/>-->
 
             </LinearLayout>
 

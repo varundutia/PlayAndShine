@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.linkWebsite.setMovementMethod(LinkMovementMethod.getInstance());
 //        binding.socialFacebook.setMovementMethod(LinkMovementMethod.getInstance());
 //        binding.socialInstagram.setMovementMethod(LinkMovementMethod.getInstance());
-        binding.socialYoutube.setMovementMethod(LinkMovementMethod.getInstance());
+//        binding.socialYoutube.setMovementMethod(LinkMovementMethod.getInstance());
         mAuth = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
 //        createGoogleRequest();

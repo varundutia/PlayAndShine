@@ -2,10 +2,12 @@ package com.one.apperz.playandshine;
 
 //import android.app.Notification;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +68,6 @@ public class ChatBox extends AppCompatActivity {
         selfUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         context = this;
         chatsItemModel = getIntent().getParcelableExtra("content");
-        sendNotification(context,1000);
         query = getReference().orderBy("timestamp", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Message> options = new FirestoreRecyclerOptions.Builder<Message>().setQuery(query, Message.class).build();
 
@@ -162,7 +163,7 @@ public class ChatBox extends AppCompatActivity {
 
                     if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                         List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
-
+                        sendNotification(context,1000);
                         Toast.makeText(context , "Current data: " + documentChanges.get(documentChanges.size() - 1).getDocument(), Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "Current data: " + queryDocumentSnapshots.getDocumentChanges().get(0));
                     } else {
@@ -176,22 +177,48 @@ public class ChatBox extends AppCompatActivity {
             Log.d("Exception", "Cloud Firestore Chats Exception");
         }
     }
-    private void sendNotification(Context applicationContext, double saved_price) {
+//    private void sendNotification(Context applicationContext, double saved_price) {
+//
+//        NotificationManager NM;
+//        NM = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(),0);
+//
+//        Notification notify = new Notification.Builder(applicationContext)
+//                .setContentTitle("Price went below " + String.valueOf(saved_price))
+//                .setContentText("Price Alert")
+//                .setSmallIcon(R.drawable.logo)
+//                .build();
+//
+//        NM.notify(0, notify);
+//
+//    }
+private void sendNotification(Context applicationContext, double saved_price) {
 
-        NotificationManager NM;
-        NM = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+    NotificationManager NM;
+    NM = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(),0);
+    PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(),0);
 
-        Notification notify = new Notification.Builder(applicationContext)
-                .setContentTitle("Price went below " + String.valueOf(saved_price))
-                .setContentText("Price Alert")
-                .setSmallIcon(R.drawable.logo)
-                .build();
+    Notification.Builder notify = new Notification.Builder(applicationContext)
+            .setContentTitle("Price went below " + String.valueOf(saved_price))
+            .setContentText("Price Alert")
+            .setSmallIcon(R.drawable.logo);
 
-        NM.notify(0, notify);
-
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+    {
+        String channelId = "Your_channel_id";
+        NotificationChannel channel = new NotificationChannel(
+                channelId,
+                "Channel human readable title",
+                NotificationManager.IMPORTANCE_HIGH);
+        NM.createNotificationChannel(channel);
+        notify.setChannelId(channelId);
     }
+
+    NM.notify(0, notify.build());
+
+}
 
     private void renderUI() {
         b.profileName.setText(chatsItemModel.getName());

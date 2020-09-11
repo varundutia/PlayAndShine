@@ -72,8 +72,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Request> requestsAccepted;
     ArrayList<ChatsItemModel> chats;
     CustomAdapter adapter;
-    private boolean searchF = true;
-    private boolean profileEditF = true;
+    private boolean searchF = false;
+    private boolean profileEditF = false;
+    private boolean connectF = false;
     SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +88,21 @@ public class MainActivity extends AppCompatActivity {
         if(pref != null) {
             profileEditF = pref.getBoolean(getResources().getString(R.string.profileEditF), true);
             searchF = pref.getBoolean(getResources().getString(R.string.searchF), true);
+            connectF = pref.getBoolean("connectF",true);
             editor = pref.edit();
         }
 
+
+        //            new Walkthrough(view,MainActivity.this,"Connect with Others",);
+//
+//        if (profileEditF){
+//            new Walkthrough(findViewById(R.id.buttonRequests), MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
+//            if(editor != null) {
+//                editor.putBoolean(getResources().getString(R.string.profileEditF), false);
+//                editor.commit();
+//                profileEditF = false;
+//            }
+//        }
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
@@ -120,6 +133,19 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
+        final UserProfile userProfile = Paper.book().read(context.getResources().getString(R.string.users_collection), new UserProfile());
+
+        if(searchF && userProfile != null && userProfile.getType().equals("athlete")) {
+            searchF = walkthrough(searchF, R.id.buttonSearch, R.string.searchF, "Connect with Others", "Press this button and have a look at the different categories of people you can connect to.");
+            if(editor != null){
+                searchF=true;
+                editor.putBoolean(getResources().getString(R.string.searchF),true);
+                editor.commit();
+            }
+        }
+        if (userProfile != null && userProfile.getType().equals("athlete")) {
+            searchF = walkthrough(searchF, R.id.buttonSearch, R.string.searchF, "Connect with Others", "Press this button and have a look at the different categories of people you can connect to.");
+        }
 
         chats = HelperLordFunctions.getChatsList(context);
         adapter = new CustomAdapter(chats);
@@ -127,6 +153,18 @@ public class MainActivity extends AppCompatActivity {
         b.listChats.setEmptyView(b.noChat);
         renderUI();
 
+    }
+
+    boolean walkthrough(boolean flag,int view_id,int string_id,String title,String body){
+        if (flag){
+            new Walkthrough(findViewById(view_id), MainActivity.this, title, body);
+            if(editor != null) {
+                editor.putBoolean(getResources().getString(string_id), false);
+                editor.commit();
+                return false;
+            }
+        }
+        return true;
     }
 
     private void renderUI() {
@@ -447,6 +485,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(context, EditProfile.class);
             startActivity(intent);
         }
+    }
+
+    public void buttonRefreshClicked(View view) {
+        finish();
+        startActivity(getIntent());
     }
 
     class CustomAdapter extends BaseAdapter {

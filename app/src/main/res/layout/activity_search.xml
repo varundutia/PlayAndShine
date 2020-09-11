@@ -66,162 +66,180 @@
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="8dp"
-                android:paddingBottom="16dp">
-                <LinearLayout
-                    android:layout_width="150dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="116dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:clickable="true"
+                    android:padding="16dp"
+                    android:tag="coach"
                     android:onClick="professionalSelected"
-                    android:tag="coach">
-                    <ImageButton
-                        android:padding="10dp"
-                        android:layout_width="@dimen/image_button_height"
-                        android:layout_height="@dimen/image_button_width"
-                        android:onClick="professionalSelected"
-                        android:tag="coach"
-                        android:background="@drawable/pro_coach"/>
+                    android:id="@+id/a2"
+                    android:layout_marginRight="8dp">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/pro_coach" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Coach"
-                        android:onClick="professionalSelected"
-                        android:tag="coach"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
                         android:layout_gravity="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="150dp"
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="116dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:clickable="true"
+                    android:padding="16dp"
+                    android:tag="physical trainer"
                     android:onClick="professionalSelected"
-                    android:tag="physical trainer">
-                    <ImageButton
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:onClick="professionalSelected"
-                        android:tag="physical trainer"
-                        android:background="@drawable/pro_physical_trainer"/>
+                    android:id="@+id/a3"
+                    android:layout_marginRight="8dp">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/pro_physical_trainer" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Physical Trainer"
-                        android:onClick="professionalSelected"
-                        android:tag="physical trainer"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
                         android:layout_gravity="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="150dp"
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
                     android:orientation="vertical"
+                    android:padding="16dp"
+                    android:tag="nutritionist"
                     android:onClick="professionalSelected"
-                    android:tag="nutritionist">
-                    <ImageButton
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:onClick="professionalSelected"
-                        android:tag="nutritionist"
-                        android:background="@drawable/pro_nutritionist"/>
+                    android:id="@+id/a4"
+                    android:layout_marginRight="8dp">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/pro_nutritionist" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nutritionist"
-                        android:onClick="professionalSelected"
-                        android:tag="nutritionist"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
                         android:layout_gravity="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="150dp"
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:clickable="true"
+                    android:padding="16dp"
+                    android:tag="dietician"
                     android:onClick="professionalSelected"
-                    android:tag="dietician">
-                    <ImageButton
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:onClick="professionalSelected"
-                        android:tag="dietician"
-                        android:background="@drawable/pro_dietician"/>
+                    android:id="@+id/a5"
+                    android:layout_marginRight="8dp">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/pro_dietician" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Dietician"
-                        android:onClick="professionalSelected"
-                        android:tag="dietician"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
                         android:layout_gravity="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="150dp"
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:clickable="true"
+                    android:padding="16dp"
+                    android:tag="psychologist"
                     android:onClick="professionalSelected"
-                    android:tag="psychologist">
-                    <ImageButton
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:onClick="professionalSelected"
-                        android:tag="psychologist"
-                        android:background="@drawable/pro_psychologist"/>
+                    android:id="@+id/a6"
+                    android:layout_marginRight="8dp">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/pro_psychologist" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Psychologist"
-                        android:onClick="professionalSelected"
-                        android:tag="psychologist"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
                         android:layout_gravity="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="150dp"
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:clickable="true"
+                    android:padding="16dp"
+                    android:tag="physiotherapist"
                     android:onClick="professionalSelected"
-                    android:tag="physiotherapist">
-                    <ImageButton
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:onClick="professionalSelected"
-                        android:tag="physiotherapist"
-                        android:background="@drawable/pro_physiotherapist"/>
+                    android:id="@+id/a7"
+                    android:layout_marginRight="8dp">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/pro_physiotherapist" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Physiotherapist"
-                        android:onClick="professionalSelected"
-                        android:tag="physiotherapist"
+                        android:text="Physio-\ntherapist"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
                         android:layout_gravity="center"/>
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="150dp"
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:clickable="true"
+                    android:padding="16dp"
+                    android:tag="other"
                     android:onClick="professionalSelected"
-                    android:tag="other">
-                    <ImageButton
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:background="@drawable/pro_other"
-                        android:onClick="professionalSelected"
-                        android:tag="other"/>
+                    android:id="@+id/a9"
+                    android:layout_marginRight="8dp">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/aa" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Other"
-                        android:onClick="professionalSelected"
-                        android:tag="other"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
                         android:layout_gravity="center"/>
-                </LinearLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
             </LinearLayout>
         </HorizontalScrollView>
 
