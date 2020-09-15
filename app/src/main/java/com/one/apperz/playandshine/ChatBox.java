@@ -21,6 +21,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -38,14 +46,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.one.apperz.playandshine.databinding.ActivityChatBoxBinding;
 import com.one.apperz.playandshine.helperLord.HelperLordFunctions;
 import com.one.apperz.playandshine.model.ChatsItemModel;
 import com.one.apperz.playandshine.model.Message;
+
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.paperdb.Paper;
 
@@ -55,8 +69,11 @@ public class ChatBox extends AppCompatActivity {
     ChatsItemModel chatsItemModel;
     ActivityChatBoxBinding b;
     String selfUID;
+    String selfName;
     Query query;
     MessageAdapter adapter;
+    private static final String URL = "https://fcm.googleapis.com/fcm/send";
+    private RequestQueue mRequestQueue;
 
 
     @Override
@@ -66,6 +83,9 @@ public class ChatBox extends AppCompatActivity {
         setContentView(b.getRoot());
 
         selfUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        selfName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        mRequestQueue = Volley.newRequestQueue(this);
+        FirebaseMessaging.getInstance().subscribeToTopic(selfUID);
         context = this;
         chatsItemModel = getIntent().getParcelableExtra("content");
         query = getReference().orderBy("timestamp", Query.Direction.ASCENDING);
@@ -163,8 +183,8 @@ public class ChatBox extends AppCompatActivity {
 
                     if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
                         List<DocumentChange> documentChanges = queryDocumentSnapshots.getDocumentChanges();
-                        sendNotification(context,1000);
-                        Toast.makeText(context , "Current data: " + documentChanges.get(documentChanges.size() - 1).getDocument(), Toast.LENGTH_SHORT).show();
+//                        sendNotification(context,1000);
+//                        Toast.makeText(context , "Current data: " + documentChanges.get(documentChanges.size() - 1).getDocument(), Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "Current data: " + queryDocumentSnapshots.getDocumentChanges().get(0));
                     } else {
                         Log.d("TAG", "Current data: null");
@@ -177,48 +197,33 @@ public class ChatBox extends AppCompatActivity {
             Log.d("Exception", "Cloud Firestore Chats Exception");
         }
     }
-//    private void sendNotification(Context applicationContext, double saved_price) {
+
+//private void sendNotification(Context applicationContext, double saved_price) {
 //
-//        NotificationManager NM;
-//        NM = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+//    NotificationManager NM;
+//    NM = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 //
-//        PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(),0);
+//    PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(),0);
 //
-//        Notification notify = new Notification.Builder(applicationContext)
-//                .setContentTitle("Price went below " + String.valueOf(saved_price))
-//                .setContentText("Price Alert")
-//                .setSmallIcon(R.drawable.logo)
-//                .build();
+//    Notification.Builder notify = new Notification.Builder(applicationContext)
+//            .setContentTitle("Price went below " + String.valueOf(saved_price))
+//            .setContentText("Price Alert")
+//            .setSmallIcon(R.drawable.logo);
 //
-//        NM.notify(0, notify);
-//
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+//    {
+//        String channelId = "Your_channel_id";
+//        NotificationChannel channel = new NotificationChannel(
+//                channelId,
+//                "Channel human readable title",
+//                NotificationManager.IMPORTANCE_HIGH);
+//        NM.createNotificationChannel(channel);
+//        notify.setChannelId(channelId);
 //    }
-private void sendNotification(Context applicationContext, double saved_price) {
-
-    NotificationManager NM;
-    NM = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-
-    PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(),0);
-
-    Notification.Builder notify = new Notification.Builder(applicationContext)
-            .setContentTitle("Price went below " + String.valueOf(saved_price))
-            .setContentText("Price Alert")
-            .setSmallIcon(R.drawable.logo);
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-    {
-        String channelId = "Your_channel_id";
-        NotificationChannel channel = new NotificationChannel(
-                channelId,
-                "Channel human readable title",
-                NotificationManager.IMPORTANCE_HIGH);
-        NM.createNotificationChannel(channel);
-        notify.setChannelId(channelId);
-    }
-
-    NM.notify(0, notify.build());
-
-}
+//
+//    NM.notify(0, notify.build());
+//
+//}
 
     private void renderUI() {
         b.profileName.setText(chatsItemModel.getName());
@@ -268,10 +273,47 @@ private void sendNotification(Context applicationContext, double saved_price) {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 b.messageEditText.setText("");
+                sendNotification(selfName,"New Message");
             }
         });
 
 
+    }
+    private void sendNotification(String name,String body) {
+        JSONObject main = new JSONObject();
+        try {
+            main.put("to", "/topics/" + chatsItemModel.getUid());
+            JSONObject notification = new JSONObject();
+            notification.put("title", name);
+            notification.put("body", body);
+            main.put("notification", notification);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URL,
+                    main, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //onsuccess
+                    Toast.makeText(ChatBox.this, "success", Toast.LENGTH_SHORT).show();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //onerror
+                    Toast.makeText(ChatBox.this,"error",Toast.LENGTH_LONG).show();
+                }
+            }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> m = new HashMap<>();
+                    m.put("content-type", "application/json");
+                    m.put("authorization", "key=AAAAuT3P1Y0:APA91bH6o60pA0vgd0njPmp1VogCgRGEPdyeKNazXFP21ogi_IvVy7L9Bsk4FNaEoesJDGDjo45TosZMSL8p0R4ebPHp3nwfsftdaJKzrMlgjdKPk5aE36GsERo8ubQbO340fxRnAKyN");
+                    return m;
+                }
+            };
+            mRequestQueue.add(request);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 
