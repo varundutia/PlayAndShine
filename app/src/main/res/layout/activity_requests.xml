@@ -25,13 +25,13 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/icon_height"
             android:id="@+id/activityTitle"
             android:text="Pending Request"
             android:textColor="#000"
             android:layout_centerVertical="true"
             android:textSize="22dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="16dp"
             android:layout_toLeftOf="@+id/buttonSendRequestIcon"
             android:layout_toRightOf="@+id/buttonBack"
             />

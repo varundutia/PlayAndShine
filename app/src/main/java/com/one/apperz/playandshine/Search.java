@@ -278,10 +278,10 @@ public class Search extends AppCompatActivity {
             return item;
         }
     }
-    public void onQClicked(View view){
-        Intent intent =new Intent(this,ImageActivity.class);
-        startActivity(intent);
-    }
+//    public void onQClicked(View view){
+//        Intent intent =new Intent(this,ImageActivity.class);
+//        startActivity(intent);
+//    }
 
 
 }

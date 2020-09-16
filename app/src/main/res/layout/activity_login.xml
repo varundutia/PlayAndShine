@@ -84,15 +84,7 @@
                 android:textSize="14dp"/>
 
 
-            <TextView android:id="@+id/link_website"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/link_website"
-                android:layout_marginTop="16dp"
-                android:gravity="center"
-                android:onClick="createAccount"
-                android:textColor="#0C51A4"
-                android:textSize="16dip"/>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -110,14 +102,14 @@
 <!--                    android:layout_marginHorizontal="8dp"-->
 <!--                    android:onClick="fbLoginButton"/>-->
 
-                <TextView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/ic_google"
-                    android:text="@string/social_instagram"
+                <ImageButton
                     android:id="@+id/google_btn"
+                    android:layout_width="34dp"
+                    android:layout_height="32dp"
                     android:layout_marginHorizontal="8dp"
-                    android:onClick="googleLoginButton"/>
+                    android:background="@drawable/ic_google"
+                    android:onClick="googleLoginButton"
+                    android:text="@string/social_instagram" />
 
 <!--                <TextView-->
 <!--                    android:layout_width="32dp"-->

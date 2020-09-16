@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         context = this;
-        binding.linkWebsite.setMovementMethod(LinkMovementMethod.getInstance());
+//        binding.linkWebsite.setMovementMethod(LinkMovementMethod.getInstance());
 //        binding.socialFacebook.setMovementMethod(LinkMovementMethod.getInstance());
 //        binding.socialInstagram.setMovementMethod(LinkMovementMethod.getInstance());
 //        binding.socialYoutube.setMovementMethod(LinkMovementMethod.getInstance());
