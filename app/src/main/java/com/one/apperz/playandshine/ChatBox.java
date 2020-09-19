@@ -279,6 +279,7 @@ public class ChatBox extends AppCompatActivity {
 
 
     }
+
     private void sendNotification(String name,String body) {
         JSONObject main = new JSONObject();
         try {
@@ -291,14 +292,12 @@ public class ChatBox extends AppCompatActivity {
                     main, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    //onsuccess
-                    Toast.makeText(ChatBox.this, "success", Toast.LENGTH_SHORT).show();
+                    //onsucces
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     //onerror
-                    Toast.makeText(ChatBox.this,"error",Toast.LENGTH_LONG).show();
                 }
             }
             ) {

@@ -81,7 +81,7 @@
                     android:padding="16dp"
                     android:tag="coach"
                     android:onClick="professionalSelected"
-                    android:id="@+id/a2"
+                    android:id="@+id/cview"
                     android:layout_marginRight="8dp">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="80dp"
@@ -105,7 +105,7 @@
                     android:padding="16dp"
                     android:tag="physical trainer"
                     android:onClick="professionalSelected"
-                    android:id="@+id/a3"
+                    android:id="@+id/ptrain"
                     android:layout_marginRight="8dp">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="80dp"
@@ -129,7 +129,7 @@
                     android:padding="16dp"
                     android:tag="nutritionist"
                     android:onClick="professionalSelected"
-                    android:id="@+id/a4"
+                    android:id="@+id/vnutri"
                     android:layout_marginRight="8dp">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="80dp"
@@ -153,7 +153,7 @@
                     android:padding="16dp"
                     android:tag="dietician"
                     android:onClick="professionalSelected"
-                    android:id="@+id/a5"
+                    android:id="@+id/vdiet"
                     android:layout_marginRight="8dp">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="80dp"
@@ -176,7 +176,7 @@
                     android:padding="16dp"
                     android:tag="psychologist"
                     android:onClick="professionalSelected"
-                    android:id="@+id/a6"
+                    android:id="@+id/vpsycho"
                     android:layout_marginRight="8dp">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="80dp"
@@ -199,7 +199,7 @@
                     android:padding="16dp"
                     android:tag="physiotherapist"
                     android:onClick="professionalSelected"
-                    android:id="@+id/a7"
+                    android:id="@+id/vphysio"
                     android:layout_marginRight="8dp">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="80dp"
@@ -223,7 +223,7 @@
                     android:padding="16dp"
                     android:tag="other"
                     android:onClick="professionalSelected"
-                    android:id="@+id/a9"
+                    android:id="@+id/vothers"
                     android:layout_marginRight="8dp">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="80dp"

@@ -2,6 +2,7 @@ package com.one.apperz.playandshine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -28,13 +36,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.one.apperz.playandshine.databinding.ActivitySearchBinding;
 import com.one.apperz.playandshine.helperLord.HelperLordFunctions;
 import com.one.apperz.playandshine.model.Request;
 import com.one.apperz.playandshine.model.UserProfile;
 import com.one.apperz.playandshine.model.Walkthrough;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
@@ -53,6 +66,8 @@ public class Search extends AppCompatActivity {
     boolean reqSENT;
     int preLast = 0;
     DocumentSnapshot lastDocument;
+    private static final String URL = "https://fcm.googleapis.com/fcm/send";
+    private RequestQueue mRequestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +75,8 @@ public class Search extends AppCompatActivity {
         b = ActivitySearchBinding.inflate(getLayoutInflater());
         View v = b.getRoot();
         setContentView(v);
+        mRequestQueue = Volley.newRequestQueue(this);
+//        FirebaseMessaging.getInstance().subscribeToTopic(selfUID);
         context = this;
         db = FirebaseFirestore.getInstance();
         Paper.init(context);
@@ -89,9 +106,23 @@ public class Search extends AppCompatActivity {
 //    }
 
     public void professionalSelected(View view) {
+        findViewById(R.id.cview).setBackgroundColor(Color.parseColor("#ffffff"));
+        findViewById(R.id.ptrain).setBackgroundColor(Color.parseColor("#ffffff"));
+        findViewById(R.id.vnutri).setBackgroundColor(Color.parseColor("#ffffff"));
+        findViewById(R.id.vdiet).setBackgroundColor(Color.parseColor("#ffffff"));
+        findViewById(R.id.vpsycho).setBackgroundColor(Color.parseColor("#ffffff"));
+        findViewById(R.id.vphysio).setBackgroundColor(Color.parseColor("#ffffff"));
+        findViewById(R.id.vothers).setBackgroundColor(Color.parseColor("#ffffff"));
+
         Log.d("TAG", "professionalSelected: "+view.getTag());
         if (SELECTED_TYPE.equals(view.getTag().toString()))
             return;
+        final int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            view.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.background_select_you_are_connect) );
+        } else {
+            view.setBackground(ContextCompat.getDrawable(context, R.drawable.background_select_you_are_connect));
+        }
 
         buffer = SELECTED_TYPE;
         SELECTED_TYPE = view.getTag().toString();
@@ -236,6 +267,12 @@ public class Search extends AppCompatActivity {
             buttonRequestSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    final int sdk = android.os.Build.VERSION.SDK_INT;
+                    if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        view.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.background_selected_you_are) );
+                    } else {
+                        view.setBackground(ContextCompat.getDrawable(context, R.drawable.background_selected_you_are));
+                    }
                     UserProfile userProfile = HelperLordFunctions.getMeUserProfile(context);
                     Request request = new Request(FirebaseAuth.getInstance().getCurrentUser().getUid(),
                             user.getUid(), userProfile.getName(), userProfile.getSport(),
@@ -282,6 +319,40 @@ public class Search extends AppCompatActivity {
 //        Intent intent =new Intent(this,ImageActivity.class);
 //        startActivity(intent);
 //    }
+//private void sendNotification(String name,String body) {
+//    JSONObject main = new JSONObject();
+//    try {
+//        main.put("to", "/topics/" + chatsItemModel.getUid());
+//        JSONObject notification = new JSONObject();
+//        notification.put("title", name);
+//        notification.put("body", body);
+//        main.put("notification", notification);
+//        JsonObjectRequest request = new JsonObjectRequest(com.android.volley.Request.Method.POST, URL,
+//                main, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                //onsucces
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                //onerror
+//            }
+//        }
+//        ) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String, String> m = new HashMap<>();
+//                m.put("content-type", "application/json");
+//                m.put("authorization", "key=AAAAuT3P1Y0:APA91bH6o60pA0vgd0njPmp1VogCgRGEPdyeKNazXFP21ogi_IvVy7L9Bsk4FNaEoesJDGDjo45TosZMSL8p0R4ebPHp3nwfsftdaJKzrMlgjdKPk5aE36GsERo8ubQbO340fxRnAKyN");
+//                return m;
+//            }
+//        };
+//        mRequestQueue.add(request);
+//    }catch(Exception e){
+//        e.printStackTrace();
+//    }
+//}
 
 
 }

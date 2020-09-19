@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
     private GoogleSignInClient mGoogleSignInClient;
+    private boolean gsign;
 
     @Override
     protected void onStart() {
@@ -78,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         context = this;
+        gsign = false;
 //        binding.linkWebsite.setMovementMethod(LinkMovementMethod.getInstance());
 //        binding.socialFacebook.setMovementMethod(LinkMovementMethod.getInstance());
 //        binding.socialInstagram.setMovementMethod(LinkMovementMethod.getInstance());
@@ -173,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                     // email existed
                     binding.inputEmail.setText(account.getEmail());
                     binding.inputPassword.setText("000000");
-                    login1();
+                    login1(true);
                 }
 
             }
@@ -205,7 +207,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this, RegisterActivity.class));
         finish();
     }
-    void login1(){
+    void login1(boolean gsign){
         String EMAIL = binding.inputEmail.getText().toString();
         String password = binding.inputPassword.getText().toString();
         boolean valid = true;
@@ -215,10 +217,12 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             binding.inputEmail.setError(null);
         }
-//        if(password.equals("000000")){
-//            binding.inputPassword.setError("Wrong Password");
-//        }
-        if (valid && mAuth != null) {
+        Log.d("gsign",""+gsign);
+        if(password.equals("000000") && !gsign){
+            Toast.makeText(LoginActivity.this, "Please Login using google",Toast.LENGTH_LONG).show();
+            updateUI(null);
+        }
+        if (valid && mAuth != null && gsign) {
             mAuth.signInWithEmailAndPassword(EMAIL, binding.inputPassword.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -246,7 +250,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        login1();
+        login1(false);
     }
 
     private void updateUI(final FirebaseUser user) {
