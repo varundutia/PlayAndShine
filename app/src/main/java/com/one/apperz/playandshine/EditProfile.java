@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -130,6 +131,7 @@ public class EditProfile extends AppCompatActivity {
                 Paper.book("requests").destroy();
                 Paper.book("users").destroy();
                 Paper.book("chats").destroy();
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(userProfile.getUid());
                 FirebaseAuth.getInstance().signOut();
 
                 Intent intent = new Intent(EditProfile.this, LoginActivity.class);
