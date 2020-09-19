@@ -224,8 +224,15 @@ public class RegisterActivity extends AppCompatActivity {
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(RegisterActivity.this, "Email Already Exists",
-                                        Toast.LENGTH_SHORT).show();
+                                String error = String.valueOf(task.getException());
+                                boolean sameEmail = error.indexOf("com.google.firebase.auth.FirebaseAuthUserCollisionException") !=-1? true: false;
+                                if(sameEmail) {
+                                    Toast.makeText(RegisterActivity.this, "Email Already Exists",
+                                            Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(RegisterActivity.this, "Please check your internet connection",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 binding.pleaseWait.setVisibility(View.GONE);
                             }
                             // ...

@@ -135,17 +135,17 @@ public class MainActivity extends AppCompatActivity {
         }
         final UserProfile userProfile = Paper.book().read(context.getResources().getString(R.string.users_collection), new UserProfile());
 
-        if(searchF && userProfile != null && userProfile.getType().equals("athlete")) {
-            searchF = walkthrough(searchF, R.id.buttonSearch, R.string.searchF, "Connect with Others", "Press this button and have a look at the different categories of people you can connect to.");
-            if(editor != null){
-                searchF=true;
-                editor.putBoolean(getResources().getString(R.string.searchF),true);
-                editor.commit();
-            }
-        }
-        if (userProfile != null && userProfile.getType().equals("athlete")) {
-            searchF = walkthrough(searchF, R.id.buttonSearch, R.string.searchF, "Connect with Others", "Press this button and have a look at the different categories of people you can connect to.");
-        }
+//        if(searchF && userProfile != null && userProfile.getType().equals("athlete")) {
+//            searchF = walkthrough(searchF, R.id.buttonSearch, R.string.searchF, "Connect with Others", "Press this button and have a look at the different categories of people you can connect to.");
+//            if(editor != null){
+//                searchF=true;
+//                editor.putBoolean(getResources().getString(R.string.searchF),true);
+//                editor.commit();
+//            }
+//        }
+//        if (userProfile != null && userProfile.getType().equals("athlete")) {
+//            searchF = walkthrough(searchF, R.id.buttonSearch, R.string.searchF, "Connect with Others", "Press this button and have a look at the different categories of people you can connect to.");
+//        }
 
         chats = HelperLordFunctions.getChatsList(context);
         adapter = new CustomAdapter(chats);

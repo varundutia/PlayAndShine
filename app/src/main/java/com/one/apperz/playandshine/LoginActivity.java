@@ -229,7 +229,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Please Login using google",Toast.LENGTH_LONG).show();
             updateUI(null);
         }
-        if (valid && mAuth != null && gsign) {
+        if (valid && mAuth != null) {
             mAuth.signInWithEmailAndPassword(EMAIL, binding.inputPassword.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -242,7 +242,7 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("TAG", getResources().getString(R.string.signInFailure), task.getException());
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(),
+                                Toast.makeText(LoginActivity.this, "Please check your internet connection",
                                         Toast.LENGTH_SHORT).show();
                                 updateUI(null);
                                 // ...
