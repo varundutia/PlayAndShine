@@ -102,14 +102,11 @@
 <!--                    android:layout_marginHorizontal="8dp"-->
 <!--                    android:onClick="fbLoginButton"/>-->
 
-                <ImageButton
-                    android:id="@+id/google_btn"
-                    android:layout_width="34dp"
-                    android:layout_height="32dp"
-                    android:layout_marginHorizontal="8dp"
-                    android:background="@drawable/ic_google"
-                    android:onClick="googleLoginButton"
-                    android:text="@string/social_instagram" />
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/google"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="googleLoginButton"/>
 
 <!--                <TextView-->
 <!--                    android:layout_width="32dp"-->

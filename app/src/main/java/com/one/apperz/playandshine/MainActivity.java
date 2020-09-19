@@ -465,8 +465,6 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
                 searchF = false;
             }
-//            Intent intent = new Intent(context,ImageActivity.class);
-//            startActivity(intent);
         } else {
             Intent intent = new Intent(context, Search.class);
             startActivity(intent);

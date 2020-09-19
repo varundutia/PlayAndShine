@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     private GoogleSignInClient mGoogleSignInClient;
     private boolean gsign;
+    com.google.android.gms.common.SignInButton signInButton;
 
     @Override
     protected void onStart() {
@@ -80,7 +81,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(view);
         context = this;
         gsign = false;
-//        binding.linkWebsite.setMovementMethod(LinkMovementMethod.getInstance());
+        signInButton=findViewById(R.id.google);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                signIn();
+                                            }
+                                        });
 //        binding.socialFacebook.setMovementMethod(LinkMovementMethod.getInstance());
 //        binding.socialInstagram.setMovementMethod(LinkMovementMethod.getInstance());
 //        binding.socialYoutube.setMovementMethod(LinkMovementMethod.getInstance());
