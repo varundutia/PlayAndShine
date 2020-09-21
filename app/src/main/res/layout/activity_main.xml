@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
     android:background="#fff">
 
@@ -18,6 +19,7 @@
             android:layout_height="@dimen/icon_height"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:background="@drawable/logo" />
 
         <TextView
@@ -30,7 +32,8 @@
             android:text="@string/app_name"
             android:layout_marginLeft="16dp"
             android:textColor="#000"
-            android:textSize="23dp" />
+            android:textSize="23dp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -46,7 +49,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
                 android:background="@drawable/ic_request"
-                android:onClick="buttonRequestsClicked" />
+                android:onClick="buttonRequestsClicked"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="@dimen/icon_width"
@@ -54,6 +58,7 @@
                 android:id="@+id/buttonSearch"
                 android:onClick="buttonSearchClicked"
                 android:layout_marginLeft="10dp"
+                android:visibility="gone"
                 android:background="@drawable/connect_icon"/>
             <TextView
                 android:layout_width="@dimen/icon_width"
@@ -68,8 +73,14 @@
                 android:id="@+id/buttonRefresh"
                 android:onClick="buttonRefreshClicked"
                 android:layout_marginLeft="10dp"
+                android:visibility="gone"
                 android:background="@mipmap/ic_refresh_round"/>
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_button_height"
+            android:src="@drawable/logo"/>
 
     </RelativeLayout>
 
@@ -132,6 +143,118 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/navigation_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/LightGrey"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/navigation_connect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="buttonSearchClicked"
+            app:cardCornerRadius="0dp"
+            android:background="@color/white"
+            android:layout_marginTop="1dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/connect_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Connect"></TextView>
+
+                <ImageView
+                    android:id="@+id/nav_connect_image"
+                    android:layout_width="@dimen/icon_width"
+                    android:layout_height="@dimen/icon_height"
+                    android:layout_below="@id/connect_text"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/connect_icon"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/navigation_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="buttonRequestsClicked"
+            app:cardCornerRadius="0dp"
+            android:background="@color/white"
+            android:layout_marginTop="1dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/request_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Requests"></TextView>
+
+                <ImageView
+                    android:id="@+id/nav_request_image"
+                    android:layout_width="@dimen/icon_width"
+                    android:layout_height="@dimen/icon_height"
+                    android:layout_below="@id/request_text"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_request"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/navigation_faqs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="buttonRefreshClicked"
+            app:cardCornerRadius="0dp"
+            android:background="@color/white"
+            android:layout_marginTop="1dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/faqs_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="FAQs"></TextView>
+
+                <ImageView
+                    android:id="@+id/nav_faqs_image"
+                    android:layout_width="@dimen/icon_width"
+                    android:layout_height="@dimen/icon_height"
+                    android:layout_below="@id/faqs_text"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_help"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
 
 </RelativeLayout>
