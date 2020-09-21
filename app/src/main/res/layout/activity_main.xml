@@ -27,7 +27,7 @@
             android:layout_toLeftOf="@+id/buttonSendRequestIcon"
             android:layout_toRightOf="@+id/buttonBack"
             android:layout_centerVertical="true"
-            android:text="Play and Shine"
+            android:text="@string/app_name"
             android:layout_marginLeft="16dp"
             android:textColor="#000"
             android:textSize="23dp" />

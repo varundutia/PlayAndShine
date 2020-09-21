@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Play And Shine</string>
+    <string name="app_name">SportzME</string>
     <string name="message_edit_text_hint">Type your message here</string>
     <string name="users_collection">users</string>
     <string name="chat_collection">chats</string>
