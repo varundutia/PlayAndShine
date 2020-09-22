@@ -86,7 +86,7 @@ public class Search extends AppCompatActivity {
         requestsSent = HelperLordFunctions.getRequestsSent(context);
 
         // Default selection
-        professionalSelected(b.vothers);
+        professionalSelected(b.cview);
     }
 
     public void buttonBackClicked(View view) {
