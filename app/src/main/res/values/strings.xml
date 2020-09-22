@@ -23,4 +23,6 @@
     <string name="fb_login_protocol_scheme">fb901765870313133</string>
     <string name="try_again">Please enable your wifi or Data</string>
 
+    <string name="about_app"><u>About this app</u></string>
+
 </resources>

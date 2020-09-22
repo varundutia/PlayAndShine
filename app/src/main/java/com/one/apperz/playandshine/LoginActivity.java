@@ -119,6 +119,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        binding.appIntroBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent app_intro = new Intent(getApplicationContext(), AppIntroActivity.class);
+                startActivity(app_intro);
+            }
+        });
+
     }
 
     private void createGoogleRequest() {
@@ -129,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
     }
+
     private void signIn() {
         createGoogleRequest();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -214,6 +223,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this, RegisterActivity.class));
         finish();
     }
+
     void login1(boolean gsign){
         String EMAIL = binding.inputEmail.getText().toString();
         String password = binding.inputPassword.getText().toString();
@@ -319,6 +329,7 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
     }
+
     public void fbLoginButton(View view) {
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
@@ -343,6 +354,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d("fbb", "handleFacebookAccessToken:" + token);
 
@@ -365,6 +377,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
     public void googleLoginButton(View view){
         signIn();
     }
