@@ -91,22 +91,23 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:id="@+id/share_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="Share"></TextView>
+                android:layout_margin="5dp">
 
                 <ImageView
                     android:id="@+id/nav_share_image"
                     android:layout_width="@dimen/icon_width"
                     android:layout_height="@dimen/icon_height"
-                    android:layout_below="@id/share_text"
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_share"/>
+
+                <TextView
+                    android:id="@+id/share_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/nav_share_image"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="Share"></TextView>
 
             </RelativeLayout>
 
@@ -125,22 +126,23 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:id="@+id/faqs_text_prof"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="FAQs"></TextView>
+                android:layout_margin="5dp">
 
                 <ImageView
                     android:id="@+id/nav_faqs_image_prof"
                     android:layout_width="@dimen/icon_width"
                     android:layout_height="@dimen/icon_height"
-                    android:layout_below="@id/faqs_text_prof"
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_help"/>
+
+                <TextView
+                    android:id="@+id/faqs_text_prof"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/nav_faqs_image_prof"
+                    android:layout_centerHorizontal="true"
+                    android:text="FAQs"></TextView>
 
             </RelativeLayout>
 
