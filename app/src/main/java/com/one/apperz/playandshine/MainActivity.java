@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean searchF = false;
     private boolean profileEditF = false;
     private boolean connectF = false;
+    private boolean faq = false;
     SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         if(pref != null) {
             profileEditF = pref.getBoolean(getResources().getString(R.string.profileEditF), true);
             searchF = pref.getBoolean(getResources().getString(R.string.searchF), true);
+            faq = pref.getBoolean("faq",true);
             connectF = pref.getBoolean("connectF",true);
             editor = pref.edit();
         }
@@ -171,9 +173,12 @@ public class MainActivity extends AppCompatActivity {
 
         final UserProfile userProfile = Paper.book().read(context.getResources().getString(R.string.users_collection), new UserProfile());
         if (userProfile != null && userProfile.getType().equals("athlete")) {
+            searchF=walkthrough(searchF,R.id.nav_connect_image,R.string.searchF,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
+
             b.buttonRequests.setVisibility(View.GONE);
             requestsSent = HelperLordFunctions.getRequestsSent(context);
             b.actionsButton.setText("Search Professional to start connecting...");
+
 
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -279,6 +284,8 @@ public class MainActivity extends AppCompatActivity {
 //                        "New Chat", request.getUidAthlete(), new Timestamp(new Date()), "athlete");
 //                chats.add(item);
 //            }
+            connectF=walkthrough(searchF,R.id.nav_request_image,R.string.connectF,"Accept a request","Press this button and have a look at the different people who are trying to connect to you.");
+
             b.actionsButton.setText("Check Pending Request to start connecting...");
 
             Collections.sort(chats, new Comparator<ChatsItemModel>() {
@@ -473,12 +480,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonProfileClicked(View view) {
         if (profileEditF){
-            new Walkthrough(view, MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
-            if(editor != null) {
-                editor.putBoolean(getResources().getString(R.string.profileEditF), false);
-                editor.commit();
-                profileEditF = false;
-            }
+           profileEditF = walkthrough(profileEditF,R.id.buttonProfile,R.string.profileEditF,"Edit Profile","You can add an avatar and make other changes to your profile.");
+//            new Walkthrough(view, MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
+//            if(editor != null) {
+//                editor.putBoolean(getResources().getString(R.string.profileEditF), false);
+//                editor.commit();
+//                profileEditF = false;
+//            }
         } else {
             Intent intent = new Intent(context, EditProfile.class);
             startActivity(intent);
@@ -486,7 +494,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonRefreshClicked(View view) {
-        startActivity(new Intent(context,HelpActivity.class));
+        if (faq){
+            faq = walkthrough(faq,R.id.nav_faqs_image,R.string.faq,"Faq","You can see the frequently asked questions");
+//            new Walkthrough(findViewById(), MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
+//            if(editor != null) {
+//                editor.putBoolean(getResources().getString(R.string.faq), false);
+//                editor.commit();
+//                profileEditF = false;
+//            }
+        } else {
+            startActivity(new Intent(context,HelpActivity.class));
+        }
     }
 
     class CustomAdapter extends BaseAdapter {
