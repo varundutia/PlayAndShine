@@ -91,7 +91,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_marginBottom="5dp">
 
                 <ImageView
                     android:id="@+id/nav_share_image"
@@ -126,7 +126,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_marginBottom="5dp">
 
                 <ImageView
                     android:id="@+id/nav_faqs_image_prof"
