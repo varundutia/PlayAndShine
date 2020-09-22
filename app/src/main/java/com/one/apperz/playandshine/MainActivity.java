@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                             Collections.sort(chats, new Comparator<ChatsItemModel>() {
                                 @Override
                                 public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
-                                    return chatsItemModel.getTimestamp().compareTo(t1.getTimestamp());
+                                    return (t1.getTimestamp().compareTo(chatsItemModel.getTimestamp()));
                                 }
                             });
 
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
             Collections.sort(chats, new Comparator<ChatsItemModel>() {
                 @Override
                 public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
-                    return chatsItemModel.getTimestamp().compareTo(t1.getTimestamp());
+                    return t1.getTimestamp().compareTo(chatsItemModel.getTimestamp());
                 }
             });
 //
@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
                                         Collections.sort(chats, new Comparator<ChatsItemModel>() {
                                             @Override
                                             public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
-                                                return chatsItemModel.getTimestamp().compareTo(t1.getTimestamp());
+                                                return t1.getTimestamp().compareTo(chatsItemModel.getTimestamp());
                                             }
                                         });
 
@@ -486,8 +486,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonRefreshClicked(View view) {
-        finish();
-        startActivity(getIntent());
+        startActivity(new Intent(context,HelpActivity.class));
     }
 
     class CustomAdapter extends BaseAdapter {
