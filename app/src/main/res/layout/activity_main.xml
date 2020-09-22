@@ -93,20 +93,20 @@
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/navigation_connect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="buttonSearchClicked"
             app:cardCornerRadius="0dp"
             android:background="@color/white"
-            android:layout_marginTop="1dp">
+            android:layout_marginTop="1dp"
+            android:id="@+id/buttonSearch">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:id="@+id/buttonSearch">
+                android:layout_marginBottom="5dp"
+                >
 
                 <ImageView
                     android:id="@+id/nav_connect_image"
@@ -130,8 +130,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/navigation_request"
-            android:layout_width="match_parent"
+            android:id="@+id/buttonRequests"            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="buttonRequestsClicked"
@@ -140,10 +139,10 @@
             android:layout_marginTop="1dp">
 
             <RelativeLayout
-                android:id="@+id/buttonRequests"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_marginBottom="5dp">
 
                 <ImageView
                     android:id="@+id/nav_request_image"
@@ -179,7 +178,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_marginBottom="5dp">
 
                 <ImageView
                     android:id="@+id/nav_faqs_image"
