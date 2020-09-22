@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
 //                        "New Chat", request.getUidAthlete(), new Timestamp(new Date()), "athlete");
 //                chats.add(item);
 //            }
-            connectF=walkthrough(searchF,R.id.nav_request_image,R.string.connectF,"Accept a request","Press this button and have a look at the different people who are trying to connect to you.");
+            connectF=walkthrough(connectF,R.id.nav_request_image,R.string.connectF,"Accept a request","Press this button and have a look at the different people who are trying to connect to you.");
 
             b.actionsButton.setText("Check Pending Request to start connecting...");
 
