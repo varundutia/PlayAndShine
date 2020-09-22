@@ -84,12 +84,16 @@ public class Search extends AppCompatActivity {
         b.listResults.setAdapter(adapter);
         b.listResults.setEmptyView(b.noResult);
         requestsSent = HelperLordFunctions.getRequestsSent(context);
+
+        // Default selection
+        professionalSelected(b.cview);
     }
 
     public void buttonBackClicked(View view) {
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
+
     @Override
     public void onBackPressed()
     {
@@ -106,6 +110,11 @@ public class Search extends AppCompatActivity {
 //    }
 
     public void professionalSelected(View view) {
+
+        Log.d("TAG", "professionalSelected: "+view.getTag());
+        if (SELECTED_TYPE.equals(view.getTag().toString()))
+            return;
+
         findViewById(R.id.cview).setBackgroundColor(Color.parseColor("#ffffff"));
         findViewById(R.id.ptrain).setBackgroundColor(Color.parseColor("#ffffff"));
         findViewById(R.id.vnutri).setBackgroundColor(Color.parseColor("#ffffff"));
@@ -114,9 +123,6 @@ public class Search extends AppCompatActivity {
         findViewById(R.id.vphysio).setBackgroundColor(Color.parseColor("#ffffff"));
         findViewById(R.id.vothers).setBackgroundColor(Color.parseColor("#ffffff"));
 
-        Log.d("TAG", "professionalSelected: "+view.getTag());
-        if (SELECTED_TYPE.equals(view.getTag().toString()))
-            return;
         final int sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.background_select_you_are_connect) );
