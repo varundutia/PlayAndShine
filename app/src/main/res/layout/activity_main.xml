@@ -41,25 +41,25 @@
             android:orientation="horizontal"
             android:layout_alignParentRight="true">
 
-            <TextView
-                android:id="@+id/buttonRequests"
-                android:layout_width="@dimen/icon_width"
-                android:layout_height="@dimen/icon_height"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/ic_request"
-                android:onClick="buttonRequestsClicked"
-                android:visibility="gone"/>
+<!--            <TextView-->
+<!--                android:id="@+id/buttonRequests"-->
+<!--                android:layout_width="@dimen/icon_width"-->
+<!--                android:layout_height="@dimen/icon_height"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginTop="0dp"-->
+<!--                android:background="@drawable/ic_request"-->
+<!--                android:onClick="buttonRequestsClicked"-->
+<!--                android:visibility="gone"/>-->
 
-            <TextView
-                android:layout_width="@dimen/icon_width"
-                android:layout_height="@dimen/icon_height"
-                android:id="@+id/buttonSearch"
-                android:onClick="buttonSearchClicked"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"
-                android:background="@drawable/connect_icon"/>
+<!--            <TextView-->
+<!--                android:layout_width="@dimen/icon_width"-->
+<!--                android:layout_height="@dimen/icon_height"-->
+<!--                android:id="@+id/buttonSearch"-->
+<!--                android:onClick="buttonSearchClicked"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:visibility="gone"-->
+<!--                android:background="@drawable/connect_icon"/>-->
             <TextView
                 android:layout_width="@dimen/icon_width"
                 android:layout_height="@dimen/icon_height"
@@ -105,14 +105,16 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                android:id="@+id/buttonSearch">
 
                 <ImageView
                     android:id="@+id/nav_connect_image"
                     android:layout_width="@dimen/icon_width"
                     android:layout_height="@dimen/icon_height"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/connect_icon"/>
+                    android:src="@drawable/connect_icon"
+                    />
 
                 <TextView
                     android:id="@+id/connect_text"
@@ -138,6 +140,7 @@
             android:layout_marginTop="1dp">
 
             <RelativeLayout
+                android:id="@+id/buttonRequests"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp">

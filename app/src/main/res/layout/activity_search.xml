@@ -220,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp"
-                    android:tag="other"
+                    android:tag="mentor"
                     android:onClick="professionalSelected"
                     android:id="@+id/vothers"
                     android:layout_marginRight="8dp">
@@ -228,11 +228,11 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/aa" />
+                        android:src="@drawable/mentor" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Other"
+                        android:text="Mentor"
                         android:textColor="@android:color/black"
                         android:textSize="18dp"
                         android:layout_gravity="center"/>

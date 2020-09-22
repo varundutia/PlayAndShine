@@ -260,6 +260,7 @@ public class Search extends AppCompatActivity {
                         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
                         .into(profileImage);
             if (position==i && reqSENT) {
+                sendNotification("New Request","request",user.getUid());
                 buttonRequestSend.setVisibility(View.GONE);
                 item.setEnabled(false);
             }
@@ -353,6 +354,41 @@ public class Search extends AppCompatActivity {
 //        e.printStackTrace();
 //    }
 //}
+
+    private void sendNotification(String name,String body,String uuid) {
+        JSONObject main = new JSONObject();
+        try {
+            main.put("to", "/topics/" + uuid);
+            JSONObject notification = new JSONObject();
+            notification.put("title", name);
+            notification.put("body", body);
+            main.put("notification", notification);
+            JsonObjectRequest request = new JsonObjectRequest(com.android.volley.Request.Method.POST, URL,
+                    main, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //onsucces
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //onerror
+                }
+            }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> m = new HashMap<>();
+                    m.put("content-type", "application/json");
+                    m.put("authorization", "key=AAAAuT3P1Y0:APA91bH6o60pA0vgd0njPmp1VogCgRGEPdyeKNazXFP21ogi_IvVy7L9Bsk4FNaEoesJDGDjo45TosZMSL8p0R4ebPHp3nwfsftdaJKzrMlgjdKPk5aE36GsERo8ubQbO340fxRnAKyN");
+                    return m;
+                }
+            };
+            mRequestQueue.add(request);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 }

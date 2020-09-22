@@ -121,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
         binding.a6.setBackgroundColor(Color.parseColor("#00ABCDEF"));
         binding.a7.setBackgroundColor(Color.parseColor("#00ABCDEF"));
         binding.a8.setBackgroundColor(Color.parseColor("#00ABCDEF"));
-        binding.a9.setBackgroundColor(Color.parseColor("#00ABCDEF"));
+//        binding.a9.setBackgroundColor(Color.parseColor("#00ABCDEF"));
         final int sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.background_selected_you_are) );

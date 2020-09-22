@@ -253,7 +253,7 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/aa" />
+                            android:src="@drawable/mentor" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -264,29 +264,29 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:tag="other"
-                        android:onClick="youAreSelected"
-                        android:id="@+id/a9"
-                        android:layout_marginRight="8dp">
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/aa" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Other"
-                            android:textColor="@android:color/white"
-                            android:textSize="18dp"
-                            android:layout_gravity="center"/>
+<!--                    <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:padding="16dp"-->
+<!--                        android:tag="other"-->
+<!--                        android:onClick="youAreSelected"-->
+<!--                        android:id="@+id/a9"-->
+<!--                        android:layout_marginRight="8dp">-->
+<!--                        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                            android:layout_width="80dp"-->
+<!--                            android:layout_height="80dp"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:src="@drawable/aa" />-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Other"-->
+<!--                            android:textColor="@android:color/white"-->
+<!--                            android:textSize="18dp"-->
+<!--                            android:layout_gravity="center"/>-->
 
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+<!--                    </androidx.appcompat.widget.LinearLayoutCompat>-->
 
                 </LinearLayout>
             </HorizontalScrollView>
