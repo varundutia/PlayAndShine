@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/appBar"
         android:padding="16dp"
-        android:background="#fff"
-        android:elevation="10dp">
+        android:background="#fff">
         <TextView
             android:id="@+id/buttonBack"
             android:layout_width="@dimen/icon_width"
@@ -27,11 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/icon_height"
             android:id="@+id/activityTitle"
-            android:text="Pending Request"
+            android:text="Pending Requests"
             android:textColor="#000"
             android:layout_centerVertical="true"
             android:textSize="22dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/icon_width"
             android:layout_toLeftOf="@+id/buttonSendRequestIcon"
             android:layout_toRightOf="@+id/buttonBack"
             />
