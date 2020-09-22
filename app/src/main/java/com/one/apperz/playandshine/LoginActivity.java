@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
@@ -122,6 +123,15 @@ public class LoginActivity extends AppCompatActivity {
         binding.appIntroBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences myPrefs = getSharedPreferences("myPrefs",MODE_PRIVATE);
+                if(myPrefs != null) {
+                    SharedPreferences.Editor editor = myPrefs.edit();
+                    if(editor!= null) {
+                        editor.putBoolean("isWatched", false);
+                        editor.commit();
+                    }
+                }
+
                 Intent app_intro = new Intent(getApplicationContext(), AppIntroActivity.class);
                 startActivity(app_intro);
             }
