@@ -458,24 +458,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void buttonRequestsClicked(View view) {
         Intent intent = new Intent(context, Requests.class);
         startActivity(intent);
     }
 
     public void buttonSearchClicked(View view) {
-        if (searchF){
-            new Walkthrough(view,MainActivity.this,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
-            if(editor != null) {
-                editor.putBoolean(getResources().getString(R.string.searchF), false);
-                editor.commit();
-                searchF = false;
-            }
-        } else {
-            Intent intent = new Intent(context, Search.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(context, Search.class);
+        startActivity(intent);
     }
 
     public void buttonProfileClicked(View view) {
@@ -495,7 +485,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonRefreshClicked(View view) {
         if (faq){
-            faq = walkthrough(faq,R.id.nav_faqs_image,R.string.faq,"Faq","You can see the frequently asked questions");
+            faq = walkthrough(faq,R.id.nav_faqs_image,R.string.faq,"FAQs","You can see the frequently asked questions");
 //            new Walkthrough(findViewById(), MainActivity.this, "Edit Profile", "You can add an avatar and make other changes to your profile.");
 //            if(editor != null) {
 //                editor.putBoolean(getResources().getString(R.string.faq), false);
