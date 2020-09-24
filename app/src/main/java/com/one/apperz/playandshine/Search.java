@@ -295,7 +295,7 @@ public class Search extends AppCompatActivity {
                             .add(request).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(context, "Request Sent"+user.getUid(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Request Sent", Toast.LENGTH_SHORT).show();
                             sendNotification("New Request",user.getName(),user.getUid());
                             buttonRequestSend.setVisibility(View.GONE);
                             REQUEST_SENT[0] = true;
