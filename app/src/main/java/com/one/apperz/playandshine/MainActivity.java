@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.one.apperz.playandshine.databinding.ActivityMainBinding;
 import com.one.apperz.playandshine.helperLord.HelperLordFunctions;
 import com.one.apperz.playandshine.model.ChatsItemModel;
@@ -47,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 
@@ -134,6 +138,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
             }
+            else {
+                FirebaseMessaging.getInstance().subscribeToTopic(currentUser.getUid());
+            }
         }
         final UserProfile userProfile = Paper.book().read(context.getResources().getString(R.string.users_collection), new UserProfile());
 
@@ -216,12 +223,13 @@ public class MainActivity extends AppCompatActivity {
                                 document.getReference().delete();
                             }
 
-                            Collections.sort(chats, new Comparator<ChatsItemModel>() {
-                                @Override
-                                public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
-                                    return (t1.getTimestamp().compareTo(chatsItemModel.getTimestamp()));
-                                }
-                            });
+                            filterChats(chats);
+
+                            if(adapter != null) {
+                                Paper.book("chats").write("listOfChats", chats);
+                                adapter.refreshData(chats);
+                                adapter.notifyDataSetChanged();
+                            }
 
                             //IDHAR ADD GET REQUEST WITH STATUS AS ENDTALK AND AGAIN RENDR CHATS LIST
                             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -276,7 +284,8 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
 
-        } else {
+        }
+        else {
             b.buttonSearch.setVisibility(View.GONE);
 //            requestsAccepted = HelperLordFunctions.getRequestsAccepted(context);
 //            for (Request request : requestsAccepted) {
@@ -288,12 +297,14 @@ public class MainActivity extends AppCompatActivity {
 
             b.actionsButton.setText("Check Pending Request to start connecting...");
 
-            Collections.sort(chats, new Comparator<ChatsItemModel>() {
-                @Override
-                public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
-                    return t1.getTimestamp().compareTo(chatsItemModel.getTimestamp());
-                }
-            });
+
+            filterChats(chats);
+
+            if (adapter != null) {
+                Paper.book("chats").write("listOfChats", chats);
+                adapter.refreshData(chats);
+                adapter.notifyDataSetChanged();
+            }
 //
 //            Paper.book("chats").write("listOfChats", chats);
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -322,6 +333,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
                             doc.getReference().delete();
+
                             Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
                             chats = chatsItemModelArrayList;
                             adapter.notifyDataSetChanged();
@@ -440,12 +452,8 @@ public class MainActivity extends AppCompatActivity {
                                     if (documentSnapshot.toObject(Message.class).getTimestamp().getSeconds() > chatsItemModel.getTimestamp().getSeconds()) {
                                         chatsItemModel.setNewMessage(true);
                                         Log.d("TAG", "onComplete: " + documentSnapshot.toObject(Message.class).getBody());
-                                        Collections.sort(chats, new Comparator<ChatsItemModel>() {
-                                            @Override
-                                            public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
-                                                return t1.getTimestamp().compareTo(chatsItemModel.getTimestamp());
-                                            }
-                                        });
+
+                                        filterChats(chats);
 
                                         Paper.book("chats").write("listOfChats", chats);
                                         adapter.refreshData(chats);
@@ -456,6 +464,29 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private void filterChats(ArrayList<ChatsItemModel> chats) {
+        HashSet<String> chatsSet = new HashSet<>();
+
+        int index = 0;
+        for(ChatsItemModel chat : chats) {
+            if(chatsSet.contains(chat.getUid())) {
+                chats.remove(index);
+            }
+            else {
+                chatsSet.add(chat.getUid());
+            }
+
+            index++;
+        }
+
+        Collections.sort(chats, new Comparator<ChatsItemModel>() {
+            @Override
+            public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
+                return (t1.getTimestamp().compareTo(chatsItemModel.getTimestamp()));
+            }
+        });
     }
 
     public void buttonRequestsClicked(View view) {
@@ -492,7 +523,8 @@ public class MainActivity extends AppCompatActivity {
 //                editor.commit();
 //                profileEditF = false;
 //            }
-        } else {
+        }
+        else {
             startActivity(new Intent(context,HelpActivity.class));
         }
     }
@@ -561,7 +593,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -577,7 +608,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         chats = HelperLordFunctions.getChatsList(context);
         Log.d("TAG", "onStart: " + chats.size());
-        adapter.refreshData(chats);
+
+        filterChats(chats);
+        if (adapter != null) {
+            Paper.book("chats").write("listOfChats", chats);
+            adapter.refreshData(chats);
+            adapter.notifyDataSetChanged();
+        }
     }
 
 }

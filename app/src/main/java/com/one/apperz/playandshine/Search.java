@@ -90,18 +90,19 @@ public class Search extends AppCompatActivity {
     }
 
     public void buttonBackClicked(View view) {
+        finish();
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 
-    @Override
-    public void onBackPressed()
-    {
-        super.onBackPressed();
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-
-    }
+//    @Override
+//    public void onBackPressed()
+//    {
+//        super.onBackPressed();
+//        startActivity(new Intent(this, MainActivity.class));
+//        finish();
+//
+//    }
 
 
 //    public void profileClicked(View view) {

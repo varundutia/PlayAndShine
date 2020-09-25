@@ -106,7 +106,14 @@ public class EditProfile extends AppCompatActivity {
 
     public void buttonBackClicked(View view) {
         finish();
+        startActivity(new Intent(context, MainActivity.class));
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        finish();
+//        startActivity(new Intent(context, MainActivity.class));
+//    }
 
     public void signOut(View view) {
 

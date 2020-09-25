@@ -51,6 +51,7 @@ import com.one.apperz.playandshine.databinding.ActivityChatBoxBinding;
 import com.one.apperz.playandshine.helperLord.HelperLordFunctions;
 import com.one.apperz.playandshine.model.ChatsItemModel;
 import com.one.apperz.playandshine.model.Message;
+import com.one.apperz.playandshine.model.UserProfile;
 
 import org.json.JSONObject;
 
@@ -68,8 +69,8 @@ public class ChatBox extends AppCompatActivity {
     Context context;
     ChatsItemModel chatsItemModel;
     ActivityChatBoxBinding b;
-    String selfUID;
-    String selfName;
+    String selfUID = "";
+    String selfName = "";
     Query query;
     MessageAdapter adapter;
     private static final String URL = "https://fcm.googleapis.com/fcm/send";
@@ -81,12 +82,19 @@ public class ChatBox extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         b = ActivityChatBoxBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
-
-        selfUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        selfName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        mRequestQueue = Volley.newRequestQueue(this);
-        FirebaseMessaging.getInstance().subscribeToTopic(selfUID);
         context = this;
+
+        //FirebaseUser user = getIntent().getParcelableExtra("user");
+
+        UserProfile user = Paper.book().read(context.getResources().getString(R.string.users_collection), new UserProfile());
+
+        if (user != null) {
+            selfUID = user.getUid();
+            selfName = user.getName();
+        }
+
+        mRequestQueue = Volley.newRequestQueue(this);
+        //FirebaseMessaging.getInstance().subscribeToTopic(selfUID);
         chatsItemModel = getIntent().getParcelableExtra("content");
         query = getReference().orderBy("timestamp", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Message> options = new FirestoreRecyclerOptions.Builder<Message>().setQuery(query, Message.class).build();
@@ -164,6 +172,7 @@ public class ChatBox extends AppCompatActivity {
 //        });
 
     }
+
     private void note(Context context){
         try {
 
@@ -241,6 +250,7 @@ public class ChatBox extends AppCompatActivity {
 
     public void buttonBackClicked(View view) {
         finish();
+        startActivity(new Intent(context, MainActivity.class));
     }
 
     @Override
@@ -315,6 +325,11 @@ public class ChatBox extends AppCompatActivity {
         }
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        finish();
+//        startActivity(new Intent(context, MainActivity.class));
+//    }
 
     public class MessageAdapter extends FirestoreRecyclerAdapter<Message, MessageAdapter.ViewHolder> {
 

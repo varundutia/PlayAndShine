@@ -111,6 +111,12 @@ public class Requests extends AppCompatActivity {
         startActivity(intent);
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        finish();
+//        startActivity(new Intent(context, MainActivity.class));
+//    }
+
     class CustomAdapter extends BaseAdapter {
         ArrayList<Request> requests;
 
