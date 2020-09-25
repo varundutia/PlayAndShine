@@ -249,7 +249,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Please Login using google",Toast.LENGTH_LONG).show();
             updateUI(null);
         }
-        if (valid && mAuth != null && gsign) {
+        if ((valid || gsign) && mAuth != null) {
             mAuth.signInWithEmailAndPassword(EMAIL, binding.inputPassword.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
