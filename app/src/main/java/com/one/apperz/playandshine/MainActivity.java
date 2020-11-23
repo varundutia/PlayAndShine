@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
             editor = pref.edit();
         }
 
+//        filterChats(chats);
+
 
         //            new Walkthrough(view,MainActivity.this,"Connect with Others",);
 //
@@ -298,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
             b.actionsButton.setText("Check Pending Request to start connecting...");
 
 
-            filterChats(chats);
+//            filterChats(chats);
 
             if (adapter != null) {
                 Paper.book("chats").write("listOfChats", chats);
@@ -453,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
                                         chatsItemModel.setNewMessage(true);
                                         Log.d("TAG", "onComplete: " + documentSnapshot.toObject(Message.class).getBody());
 
-                                        filterChats(chats);
+//                                        filterChats(chats);
 
                                         Paper.book("chats").write("listOfChats", chats);
                                         adapter.refreshData(chats);
@@ -484,6 +486,7 @@ public class MainActivity extends AppCompatActivity {
         Collections.sort(chats, new Comparator<ChatsItemModel>() {
             @Override
             public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
+                Log.d("Time",String.valueOf(chatsItemModel.getTimestamp())+" "+String.valueOf(t1.getTimestamp()));
                 return (t1.getTimestamp().compareTo(chatsItemModel.getTimestamp()));
             }
         });
@@ -609,7 +612,7 @@ public class MainActivity extends AppCompatActivity {
         chats = HelperLordFunctions.getChatsList(context);
         Log.d("TAG", "onStart: " + chats.size());
 
-        filterChats(chats);
+//        filterChats(chats);
         if (adapter != null) {
             Paper.book("chats").write("listOfChats", chats);
             adapter.refreshData(chats);
