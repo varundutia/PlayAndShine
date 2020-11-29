@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -45,7 +46,10 @@ import com.one.apperz.playandshine.model.Request;
 import com.one.apperz.playandshine.model.UserProfile;
 import com.one.apperz.playandshine.model.Walkthrough;
 
+import org.w3c.dom.Document;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean connectF = false;
     private boolean faq = false;
     SharedPreferences.Editor editor;
+    HashSet<String> chatIds;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +93,10 @@ public class MainActivity extends AppCompatActivity {
         View v = b.getRoot();
         setContentView(v);
         context = this;
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swipe);
         Paper.init(context);
+        chats=new ArrayList<>();
+        chatIds=new HashSet<>();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if(pref != null) {
             profileEditF = pref.getBoolean(getResources().getString(R.string.profileEditF), true);
@@ -158,11 +166,20 @@ public class MainActivity extends AppCompatActivity {
 //            searchF = walkthrough(searchF, R.id.buttonSearch, R.string.searchF, "Connect with Others", "Press this button and have a look at the different categories of people you can connect to.");
 //        }
 
-        chats = HelperLordFunctions.getChatsList(context);
+//        chats = HelperLordFunctions.getChatsList(context);
         adapter = new CustomAdapter(chats);
         b.listChats.setAdapter(adapter);
         b.listChats.setEmptyView(b.noChat);
         renderUI();
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                chats.clear();
+                chatIds.clear();
+                renderUI();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
 
     }
 
@@ -173,181 +190,299 @@ public class MainActivity extends AppCompatActivity {
                 editor.putBoolean(getResources().getString(string_id), false);
                 editor.commit();
                 return false;
+            }else{
+                return true;
             }
         }
-        return true;
+        return flag;
     }
 
     private void renderUI() {
 
         final UserProfile userProfile = Paper.book().read(context.getResources().getString(R.string.users_collection), new UserProfile());
-        if (userProfile != null && userProfile.getType().equals("athlete")) {
-            searchF=walkthrough(searchF,R.id.nav_connect_image,R.string.searchF,"Connect with Others","Press this button and have a look at the different categories of people you can connect to.");
+        if (userProfile != null) {
+            if (userProfile.getType().equals("athlete")) {
+                searchF = walkthrough(searchF, R.id.nav_connect_image, R.string.searchF, "Connect with Others", "Press this button and have a look at the different categories of people you can connect to.");
 
-            b.buttonRequests.setVisibility(View.GONE);
-            requestsSent = HelperLordFunctions.getRequestsSent(context);
-            b.actionsButton.setText("Search Professional to start connecting...");
+                b.buttonRequests.setVisibility(View.GONE);
+                requestsSent = HelperLordFunctions.getRequestsSent(context);
+                b.actionsButton.setText("Search Professional to start connecting...");
 
 
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-            if(firebaseFirestore != null) {
-                firebaseFirestore.collection(context.getString(R.string.requests_collection))
-                        .whereEqualTo("uidAthlete", userProfile.getUid())
-                        .whereEqualTo("status", "accepted")
-                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
+                if (firebaseFirestore != null) {
+                    firebaseFirestore.collection(context.getString(R.string.requests_collection))
+                            .whereEqualTo("uidAthlete", userProfile.getUid())
+                            .whereEqualTo("status", "accepted")
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("chatstask", "achieved");
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d("chats", "entered");
+                                    Request chat = document.toObject(Request.class);
+                                    String uid = chat.getUidProfessional();
+//                                    CollectionReference c = (CollectionReference) document.get("messages");
+//                                    Task<QuerySnapshot> task1 = c.get();
+//                                    Message message=new Message();
+//                                    for(QueryDocumentSnapshot d:task1.getResult()){
+//                                        message=d.toObject(Message.class);
+//                                        Log.d("messageVarun",message.getBody());
+//                                    }
+//                                    final Message m=message;
+//                                    for (UserProfile user : requestsSent) {
+//                                        if (request.getUidAthlete().equals("") && request.getUidProfessional().equals("")) {
+//                                            break;
+//                                        }
+//                                        if (request.getUidAthlete().equals(user.getUid())) {//add athlete uid
+//                                            item = new ChatsItemModel(user.getName(), user.getPhotoURL(),
+//                                                    "New Chat", user.getUid(),
+//                                                    (Timestamp) new Timestamp(new Date()),
+//                                                    user.getType(), true);
+////                                            ArrayList<String> profs = HelperLordFunctions.getProfessionalConnected(context);
+////                                            profs.add(user.getType());
+////                                            Paper.book("requests").write("athletesConnected", profs);
+//                                            chats.add(item);
+//                                            break;
+//                                        }
+//                                    }
+                                    FirebaseFirestore.getInstance().collection(context.getResources().getString(R.string.users_collection)).document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                UserProfile user = task.getResult().toObject(UserProfile.class);
+                                                ChatsItemModel item = new ChatsItemModel();
+                                                item = new ChatsItemModel(user.getName(), user.getPhotoURL(),
+                                                        "New Chat", user.getUid(),
+                                                        new Timestamp(new Date()),
+                                                        user.getType(), true);
+//                                                chats.add(item);
+                                                updateChatWithTime(item,userProfile);
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                Request request = document.toObject(Request.class);
-                                ChatsItemModel item = new ChatsItemModel();
-
-                                for (UserProfile user : requestsSent) {
-                                    if(request.getUidAthlete().equals("") && request.getUidProfessional().equals("")) {
-                                        break;
-                                    }
-                                    if (request.getUidProfessional().equals(user.getUid())) {
-                                        item = new ChatsItemModel(user.getName(), user.getPhotoURL(),
-                                                "New Chat", user.getUid(),
-                                                (Timestamp) new Timestamp(new Date()),
-                                                user.getType(), true);
-                                        ArrayList<String> profs = HelperLordFunctions.getProfessionalConnected(context);
-                                        profs.add(user.getType());
-                                        Paper.book("requests").write("professionalConnected", profs);
-                                        chats.add(item);
-                                        break;
-                                    }
-                                }
-
-                                document.getReference().delete();
-                            }
-
-                            filterChats(chats);
-
-                            if(adapter != null) {
-                                Paper.book("chats").write("listOfChats", chats);
-                                adapter.refreshData(chats);
-                                adapter.notifyDataSetChanged();
-                            }
-
-                            //IDHAR ADD GET REQUEST WITH STATUS AS ENDTALK AND AGAIN RENDR CHATS LIST
-                            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-                            if(firebaseFirestore != null) {
-                                firebaseFirestore.getInstance().collection(context.getString(R.string.requests_collection))
-                                        .whereEqualTo("uidAthlete", userProfile.getUid())
-                                        .whereEqualTo("status", "endTalk")
-                                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-                                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                                            Request request = doc.toObject(Request.class);
-                                            ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
-                                            for (int i = 0; i < chatsItemModelArrayList.size(); i++) {
-                                                ChatsItemModel chatsItemModel = chatsItemModelArrayList.get(i);
-                                                if (chatsItemModel.getUid().equals(request.getUidProfessional()) && userProfile.getUid().equals(request.getUidAthlete())) {
-                                                    chatsItemModelArrayList.remove(i);
-                                                    break;
-                                                }
                                             }
-                                            Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
-                                            chats = chatsItemModelArrayList;
-                                            Paper.book("requests").write(request.getType(), new ArrayList<String>());
-                                            ArrayList<String> procon = HelperLordFunctions.getProfessionalConnected(context);
-                                            procon.remove(request.getType());
-                                            Paper.book("requests").write("professionalConnected", procon);
-                                            doc.getReference().delete();
                                         }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d("exceptionChat", e.getMessage());
+                                        }
+                                    }).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                                        Paper.book("chats").write("listOfChats", chats);
+                                        }
+//                                    } {
+//                                        @Override
+//                                        public void onSuccess(QuerySnapshot documentSnapshot) {
+//                                            for (DocumentSnapshot doc: documentSnapshot){
+//
+//                                            }
+//                                        }
+                                    });
 
-                                        adapter.notifyDataSetChanged();
 
-                                        updateChatsWithTime(chats);
+//                                    document.getReference().delete();
+                                }
+//                                updateChatsWithTime(chats);
+//                                filterChats(chats);
+//
+//                                if (adapter != null) {
+////                                    Paper.book("chats").write("listOfChats", chats);
+//                                    adapter.refreshData(chats);
+////                                    adapter.notifyDataSetChanged();
+//                                }
 
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
+                                //IDHAR ADD GET REQUEST WITH STATUS AS ENDTALK AND AGAIN RENDR CHATS LIST
+//
 
-                                    }
-                                });
                             }
-
-                            Paper.book("chats").write("listOfChats", chats);
-                            adapter.notifyDataSetChanged();
-
                         }
-                    }
-                });
-            }
+                    });
+                }
 
-        }
-        else {
-            b.buttonSearch.setVisibility(View.GONE);
+            } else {
+                b.buttonSearch.setVisibility(View.GONE);
 //            requestsAccepted = HelperLordFunctions.getRequestsAccepted(context);
 //            for (Request request : requestsAccepted) {
 //                ChatsItemModel item = new ChatsItemModel(request.getName(), request.getPhotoURL(),
 //                        "New Chat", request.getUidAthlete(), new Timestamp(new Date()), "athlete");
 //                chats.add(item);
 //            }
-            connectF=walkthrough(connectF,R.id.nav_request_image,R.string.connectF,"Accept a request","Press this button and have a look at the different people who are trying to connect to you.");
+                connectF = walkthrough(connectF, R.id.nav_request_image, R.string.connectF, "Accept a request", "Press this button and have a look at the different people who are trying to connect to you.");
 
-            b.actionsButton.setText("Check Pending Request to start connecting...");
+                b.actionsButton.setText("Check Pending Request to start connecting...");
+                requestsSent = HelperLordFunctions.getRequestsSent(context);
+                FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+                if (firebaseFirestore != null) {
+                    firebaseFirestore.collection(context.getString(R.string.requests_collection))
+                            .whereEqualTo("uidProfessional", userProfile.getUid())
+                            .whereEqualTo("status", "accepted")
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("chatstask", "achieved");
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d("chats", "entered");
+                                    Request chat = document.toObject(Request.class);
+                                    String uid = chat.getUidAthlete();
+//                                    CollectionReference c = (CollectionReference) document.get("messages");
+//                                    Task<QuerySnapshot> task1 = c.get();
+//                                    Message message=new Message();
+//                                    for(QueryDocumentSnapshot d:task1.getResult()){
+//                                        message=d.toObject(Message.class);
+//                                        Log.d("messageVarun",message.getBody());
+//                                    }
+//                                    final Message m=message;
+//                                    for (UserProfile user : requestsSent) {
+//                                        if (request.getUidAthlete().equals("") && request.getUidProfessional().equals("")) {
+//                                            break;
+//                                        }
+//                                        if (request.getUidAthlete().equals(user.getUid())) {//add athlete uid
+//                                            item = new ChatsItemModel(user.getName(), user.getPhotoURL(),
+//                                                    "New Chat", user.getUid(),
+//                                                    (Timestamp) new Timestamp(new Date()),
+//                                                    user.getType(), true);
+////                                            ArrayList<String> profs = HelperLordFunctions.getProfessionalConnected(context);
+////                                            profs.add(user.getType());
+////                                            Paper.book("requests").write("athletesConnected", profs);
+//                                            chats.add(item);
+//                                            break;
+//                                        }
+//                                    }
+                                    FirebaseFirestore.getInstance().collection(context.getResources().getString(R.string.users_collection)).document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                UserProfile user = task.getResult().toObject(UserProfile.class);
+                                                ChatsItemModel item = new ChatsItemModel();
+                                                item = new ChatsItemModel(user.getName(), user.getPhotoURL(),
+                                                        "New Chat", user.getUid(),
+                                                        new Timestamp(new Date()),
+                                                        user.getType(), true);
+                                                updateChatWithTime(item,userProfile);
+                                            }
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d("exceptionChat", e.getMessage());
+                                        }
+                                    });
 
 
-//            filterChats(chats);
-
-            if (adapter != null) {
-                Paper.book("chats").write("listOfChats", chats);
-                adapter.refreshData(chats);
-                adapter.notifyDataSetChanged();
-            }
-//
-//            Paper.book("chats").write("listOfChats", chats);
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-            if(firebaseFirestore != null) {
-                firebaseFirestore.collection(context.getString(R.string.requests_collection))
-                        .whereEqualTo("uidProfessional", userProfile.getUid())
-                        .whereEqualTo("status", "endTalk").get()
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        }).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                            Request request = doc.toObject(Request.class);
-
-                            ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
-                            for (int i = 0; i < chatsItemModelArrayList.size(); i++) {
-                                ChatsItemModel chatsItemModel = chatsItemModelArrayList.get(i);
-                                if (chatsItemModel.getUid().equals(request.getUidAthlete()) && userProfile.getUid().equals(request.getUidProfessional())) {
-                                    chatsItemModelArrayList.remove(i);
-                                    break;
+//                                    document.getReference().delete();
                                 }
+//                                updateChatsWithTime(chats);
+
+
                             }
-                            doc.getReference().delete();
-
-                            Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
-                            chats = chatsItemModelArrayList;
-                            adapter.notifyDataSetChanged();
-                            updateChatsWithTime(chats);
                         }
-                    }
-                });
+                    });
+                }
+//                if (firebaseFirestore != null) {
+//                    firebaseFirestore.collection(context.getString(R.string.requests_collection))
+//                            .whereEqualTo("uidProfessional", userProfile.getUid())
+//                            .whereEqualTo("status", "endTalk").get()
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//
+//                                }
+//                            }).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                            for (DocumentSnapshot doc : queryDocumentSnapshots) {
+//                                Request request = doc.toObject(Request.class);
+//
+////                                ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
+//                                for (int i = 0; i < chats.size(); i++) {
+//                                    ChatsItemModel chatsItemModel = chats.get(i);
+//                                    if (chatsItemModel.getUid().equals(request.getUidAthlete()+request.getUidProfessional()) && userProfile.getUid().equals(request.getUidProfessional())) {
+//                                        chats.remove(i);
+//                                        break;
+//                                    }
+//                                }
+////                                doc.getReference().delete();
+//
+////                                Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
+////                                chats = chatsItemModelArrayList;
+////                                adapter.notifyDataSetChanged();
+////                                updateChatsWithTime(chats);
+//                            }
+//                        }
+//                    });
+//                }
+//                adapter.refreshData(chats);
+//                Paper.book("chats").write("listOfChats", chats);
+//
+//            }
+
+//            else {
+//                b.buttonSearch.setVisibility(View.GONE);
+////            requestsAccepted = HelperLordFunctions.getRequestsAccepted(context);
+////            for (Request request : requestsAccepted) {
+////                ChatsItemModel item = new ChatsItemModel(request.getName(), request.getPhotoURL(),
+////                        "New Chat", request.getUidAthlete(), new Timestamp(new Date()), "athlete");
+////                chats.add(item);
+////            }
+//                connectF = walkthrough(connectF, R.id.nav_request_image, R.string.connectF, "Accept a request", "Press this button and have a look at the different people who are trying to connect to you.");
+//
+//                b.actionsButton.setText("Check Pending Request to start connecting...");
+//
+//
+////            filterChats(chats);
+//
+//                if (adapter != null) {
+//                    Paper.book("chats").write("listOfChats", chats);
+//                    adapter.refreshData(chats);
+//                    adapter.notifyDataSetChanged();
+//                }
+////
+////            Paper.book("chats").write("listOfChats", chats);
+//                FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+//
+//                if (firebaseFirestore != null) {
+//                    firebaseFirestore.collection(context.getString(R.string.requests_collection))
+//                            .whereEqualTo("uidProfessional", userProfile.getUid())
+//                            .whereEqualTo("status", "endTalk").get()
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//
+//                                }
+//                            }).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                            for (DocumentSnapshot doc : queryDocumentSnapshots) {
+//                                Request request = doc.toObject(Request.class);
+//
+//                                ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
+//                                for (int i = 0; i < chatsItemModelArrayList.size(); i++) {
+//                                    ChatsItemModel chatsItemModel = chatsItemModelArrayList.get(i);
+//                                    if (chatsItemModel.getUid().equals(request.getUidAthlete()) && userProfile.getUid().equals(request.getUidProfessional())) {
+//                                        chatsItemModelArrayList.remove(i);
+//                                        break;
+//                                    }
+//                                }
+//                                doc.getReference().delete();
+//
+//                                Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
+//                                chats = chatsItemModelArrayList;
+//                                adapter.notifyDataSetChanged();
+//                                updateChatsWithTime(chats);
+//                            }
+//                        }
+//                    });
+//                }
+//
+//                adapter.notifyDataSetChanged();
+//
+//            }
             }
-
-            adapter.notifyDataSetChanged();
-
-        }
 
 
 //
@@ -430,6 +565,7 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
+        }
     }
 
     private void updateChatsWithTime(final ArrayList<ChatsItemModel> chats) {
@@ -451,21 +587,131 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (DocumentSnapshot documentSnapshot : task.getResult()) {
-                                    if (documentSnapshot.toObject(Message.class).getTimestamp().getSeconds() > chatsItemModel.getTimestamp().getSeconds()) {
+                                    Message message = documentSnapshot.toObject(Message.class);
+                                    if (message.getTimestamp().getSeconds() > chatsItemModel.getTimestamp().getSeconds()) {
                                         chatsItemModel.setNewMessage(true);
                                         Log.d("TAG", "onComplete: " + documentSnapshot.toObject(Message.class).getBody());
 
 //                                        filterChats(chats);
 
-                                        Paper.book("chats").write("listOfChats", chats);
-                                        adapter.refreshData(chats);
+//                                        Paper.book("chats").write("listOfChats", chats);
+//                                        adapter.refreshData(chats);
 
                                     }
+                                    chatsItemModel.setTimestamp(message.getTimestamp());
+                                    chatsItemModel.setLastMessage(message.getBody());
                                 }
                             }
                         }
                     });
         }
+    }
+    private void updateChatWithTime(final ChatsItemModel chatsItemModel,UserProfile userProfile) {
+            String ref,type;
+            Log.d("TAG", "getReference: " + chatsItemModel.getType());
+            if (chatsItemModel.getType().equals("athlete")) {
+                ref = chatsItemModel.getUid() + userProfile.getUid();
+                type = "uidProfessional";
+            }
+            else {
+                ref = userProfile.getUid() + chatsItemModel.getUid();
+                type = "uidAthlete";
+            }
+            FirebaseFirestore.getInstance().collection(context.getString(R.string.chat_collection))
+                    .document(ref)
+                    .collection(context.getString(R.string.message_collection))
+                    .orderBy("timestamp", Query.Direction.DESCENDING).limit(1).get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                                    Message message = documentSnapshot.toObject(Message.class);
+                                    if (message.getTimestamp().getSeconds() > chatsItemModel.getTimestamp().getSeconds()) {
+                                        chatsItemModel.setNewMessage(true);
+                                        Log.d("TAG", "onComplete: " + documentSnapshot.toObject(Message.class).getBody());
+
+//                                        filterChats(chats);
+
+//                                        Paper.book("chats").write("listOfChats", chats);
+//                                        adapter.refreshData(chats);
+
+                                    }
+                                    chatsItemModel.setTimestamp(message.getTimestamp());
+                                    chatsItemModel.setLastMessage(message.getBody());
+                                }
+                                if (chatIds.contains(chatsItemModel.getUid())) {
+                                    chats.remove(chatsItemModel);
+                                }
+                                    chats.add(chatsItemModel);
+                                    chatIds.add(chatsItemModel.getUid());
+//                                filterChats(chats);
+                                    Collections.sort(chats, new Comparator<ChatsItemModel>() {
+                                        @Override
+                                        public int compare(ChatsItemModel chatsItemModel, ChatsItemModel t1) {
+                                            Log.d("Time",String.valueOf(chatsItemModel.getTimestamp())+" "+String.valueOf(t1.getTimestamp()));
+                                            return (t1.getTimestamp().compareTo(chatsItemModel.getTimestamp()));
+                                        }
+                                    });
+                                    removeEndedChats(userProfile,chats,type);
+                                    if (adapter != null) {
+                                        Paper.book("chats").write("listOfChats", chats);
+                                        adapter.refreshData(chats);
+    //                                    adapter.notifyDataSetChanged();
+                                    }
+                                }
+                            }
+
+                    });
+
+        }
+    void removeEndedChats(UserProfile userProfile,ArrayList<ChatsItemModel> chats,String type){
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        if (firebaseFirestore != null) {
+            firebaseFirestore.getInstance().collection(context.getString(R.string.requests_collection))
+                    .whereEqualTo(type, userProfile.getUid())
+                    .whereEqualTo("status", "endTalk")
+                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        Request request = doc.toObject(Request.class);
+//                                                ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
+                        String id = type.equals("uidAthlete")?request.getUidAthlete():request.getUidProfessional();
+                        for (int i = 0; i < chats.size(); i++) {
+                            ChatsItemModel chatsItemModel = chats.get(i);
+
+                            if (chatsItemModel.getUid().equals(request.getUidAthlete()+request.getUidProfessional()) && userProfile.getUid().equals(id)) {
+                                chats.remove(i);
+                                break;
+                            }
+                        }
+//                                                Paper.book("chats").write("listOfChats", chatsItemModelArrayList);
+
+                        if (type.equals("uidAthlete")) {
+                            Paper.book("requests").write(request.getType(), new ArrayList<String>());
+                            ArrayList<String> procon = HelperLordFunctions.getProfessionalConnected(context);
+                            procon.remove(request.getType());
+                            Paper.book("requests").write("professionalConnected", procon);
+                        }
+
+//                                                doc.getReference().delete();
+                    }
+                    Paper.book("chats").write("listOfChats", chats);
+                    adapter.refreshData(chats);
+                    updateChatsWithTime(chats);
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }
+
     }
 
     private void filterChats(ArrayList<ChatsItemModel> chats) {
@@ -576,7 +822,7 @@ public class MainActivity extends AppCompatActivity {
                 lastMessage.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             }
             profileName.setText(chatsItemModel.getName());
-            lastMessage.setText(chatsItemModel.getType());
+            lastMessage.setText(chatsItemModel.getLastMessage());
 
             if (!chatsItemModel.getPhotoURL().equals(""))
                 Glide.with(context).load(chatsItemModel.getPhotoURL())
@@ -609,15 +855,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        chats = HelperLordFunctions.getChatsList(context);
+//        chats = HelperLordFunctions.getChatsList(context);
         Log.d("TAG", "onStart: " + chats.size());
-
 //        filterChats(chats);
-        if (adapter != null) {
-            Paper.book("chats").write("listOfChats", chats);
-            adapter.refreshData(chats);
-            adapter.notifyDataSetChanged();
-        }
+//        if (adapter != null) {
+////            Paper.book("chats").write("listOfChats", chats);
+//            adapter.refreshData(chats);
+////            adapter.notifyDataSetChanged();
+//        }
+
     }
 
 }

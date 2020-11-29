@@ -151,6 +151,7 @@ public class ChatBox extends AppCompatActivity {
         super.onStart();
         adapter.startListening();
 
+
 //        registration = messageRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 //            @Override
 //            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -315,8 +316,8 @@ public class ChatBox extends AppCompatActivity {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> m = new HashMap<>();
                     m.put("content-type", "application/json");
-                    m.put("authorization", "key=AAAAAerow3s:APA91bERIW2BiTStnl7wMGcSSqEf-Vi3QX4f1GxKjGxbU4FTTwIGWZ-Xa-ymrvXrXzkVEvcGXb3dSIjicaC_BwQyjYZdpkSDyby9C4mnmta7ckWZ84SwllWS1XsZ9QcMgdisGp6b67n7");
-                    return m;
+                    m.put("authorization", getResources().getString(R.string.notification_key));
+                    return  m;
                 }
             };
             mRequestQueue.add(request);

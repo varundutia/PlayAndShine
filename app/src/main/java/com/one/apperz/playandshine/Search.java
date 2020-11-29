@@ -389,7 +389,7 @@ public class Search extends AppCompatActivity {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> m = new HashMap<>();
                     m.put("content-type", "application/json");
-                    m.put("authorization", "key=AAAAuT3P1Y0:APA91bH6o60pA0vgd0njPmp1VogCgRGEPdyeKNazXFP21ogi_IvVy7L9Bsk4FNaEoesJDGDjo45TosZMSL8p0R4ebPHp3nwfsftdaJKzrMlgjdKPk5aE36GsERo8ubQbO340fxRnAKyN");
+                    m.put("authorization", getResources().getString(R.string.notification_key));
                     return m;
                 }
             };

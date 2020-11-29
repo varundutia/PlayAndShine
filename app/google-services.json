@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "8236090235-sn4akb2j5i321pjnnbnddbb9cp8vhmes.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.one.apperz.playandshine",
+            "certificate_hash": "3dd6622d77fb42421e37972af4d1a8a385e07954"
+          }
+        },
+        {
           "client_id": "8236090235-q2ebi8a3q0kc1jgevr1a1m3v8fqt6e6s.apps.googleusercontent.com",
           "client_type": 3
         }
