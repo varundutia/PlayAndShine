@@ -637,9 +637,11 @@ public class MainActivity extends AppCompatActivity {
 //                                        adapter.refreshData(chats);
 
                                     }
+//                                    chatsItemModel.setUid(ref);
                                     chatsItemModel.setTimestamp(message.getTimestamp());
                                     chatsItemModel.setLastMessage(message.getBody());
                                 }
+
                                 if (chatIds.contains(chatsItemModel.getUid())) {
                                     chats.remove(chatsItemModel);
                                 }
@@ -680,10 +682,12 @@ public class MainActivity extends AppCompatActivity {
                         Request request = doc.toObject(Request.class);
 //                                                ArrayList<ChatsItemModel> chatsItemModelArrayList = HelperLordFunctions.getChatsList(context);
                         String id = type.equals("uidAthlete")?request.getUidAthlete():request.getUidProfessional();
+                        String chatId = type.equals("uidAthlete")?request.getUidProfessional():request.getUidAthlete();
+
                         for (int i = 0; i < chats.size(); i++) {
                             ChatsItemModel chatsItemModel = chats.get(i);
 
-                            if (chatsItemModel.getUid().equals(request.getUidAthlete()+request.getUidProfessional()) && userProfile.getUid().equals(id)) {
+                            if (chatsItemModel.getUid().equals(chatId) && userProfile.getUid().equals(id)) {
                                 chats.remove(i);
                                 break;
                             }
@@ -701,13 +705,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                     Paper.book("chats").write("listOfChats", chats);
                     adapter.refreshData(chats);
-                    updateChatsWithTime(chats);
+//                    updateChatsWithTime(chats);
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-
+                    int z=1;
                 }
             });
         }

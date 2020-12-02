@@ -22,7 +22,7 @@
     <string name="fb_login_protocol_scheme">fb901765870313133</string>
     <string name="try_again">Please enable your wifi or Data</string>
     <string name="faq">faq</string>
-
+    <string name="notification_key">key=AAAAuT3P1Y0:APA91bH6o60pA0vgd0njPmp1VogCgRGEPdyeKNazXFP21ogi_IvVy7L9Bsk4FNaEoesJDGDjo45TosZMSL8p0R4ebPHp3nwfsftdaJKzrMlgjdKPk5aE36GsERo8ubQbO340fxRnAKyN</string>
     <string name="about_app"><u>About this app</u></string>
 
 </resources>

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "8236090235",
-    "firebase_url": "https://test-playandshine.firebaseio.com",
-    "project_id": "test-playandshine",
-    "storage_bucket": "test-playandshine.appspot.com"
+    "project_number": "795605980557",
+    "firebase_url": "https://playandshine-93486.firebaseio.com",
+    "project_id": "playandshine-93486",
+    "storage_bucket": "playandshine-93486.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:8236090235:android:207cc0ca4b7005e76933de",
+        "mobilesdk_app_id": "1:795605980557:android:c1c4d8d2ba84606009d9c4",
         "android_client_info": {
           "package_name": "com.one.apperz.playandshine"
         }
       },
       "oauth_client": [
         {
-          "client_id": "8236090235-sn4akb2j5i321pjnnbnddbb9cp8vhmes.apps.googleusercontent.com",
+          "client_id": "795605980557-5ofebh1ifaga4dlnfsbsnsfs9vb6ubdo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.one.apperz.playandshine",
@@ -23,49 +23,20 @@
           }
         },
         {
-          "client_id": "8236090235-q2ebi8a3q0kc1jgevr1a1m3v8fqt6e6s.apps.googleusercontent.com",
+          "client_id": "795605980557-boc79gtderp91om87kj9qinrt7c15k4v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAv3N0DhvfuYyKA3RyTo_trcMlLOVtjWbA"
+          "current_key": "AIzaSyAS4vyCb0DLTqJG2kzmnwbh6KBsZreE87A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "8236090235-q2ebi8a3q0kc1jgevr1a1m3v8fqt6e6s.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:8236090235:android:bb2dd948d55311016933de",
-        "android_client_info": {
-          "package_name": "com.varun.ttttt"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "8236090235-q2ebi8a3q0kc1jgevr1a1m3v8fqt6e6s.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAv3N0DhvfuYyKA3RyTo_trcMlLOVtjWbA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "8236090235-q2ebi8a3q0kc1jgevr1a1m3v8fqt6e6s.apps.googleusercontent.com",
+              "client_id": "795605980557-boc79gtderp91om87kj9qinrt7c15k4v.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
