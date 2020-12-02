@@ -163,7 +163,7 @@ public class EditProfile extends AppCompatActivity {
         String acheivement = b.profileAchievement.getEditText().getText().toString();
         String experience = b.profileAchievement.getEditText().getText().toString();
 
-        UserProfile user = new UserProfile(FirebaseAuth.getInstance().getCurrentUser().getUid(), fname + lname, email, sport, TYPE, photoURL,
+        UserProfile user = new UserProfile(FirebaseAuth.getInstance().getCurrentUser().getUid(), fname + " " +lname, email, sport, TYPE, photoURL,
                 acheivement, age, phone, location, experience);
 
         Paper.book().write(context.getResources().getString(R.string.users_collection), user);
